@@ -1,0 +1,106 @@
+.panel{
+    display: none;
+}
+.container{
+    margin-top: 60px;
+}
+.table-title{
+    display: flex;
+    justify-content: center;
+    font-size: 26px;
+}
+.flip{
+    padding: 10px;
+    border: 1px solid gray;
+    margin-bottom: 20px;
+}
+.arrow {
+    margin-left: 25px;
+    border-bottom: 3px solid #333;
+    border-right: 3px solid #333;
+    cursor: pointer;
+    float: right;
+    height: 8px;
+    margin-right: 20px;
+    text-indent: -9999px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    width: 8px;
+    margin-top: 10px;
+}
+
+.active .arrow {
+    transform: rotate(225deg);
+}
+
+.chart-container {
+    height: 400px;
+    flex: 0 0 auto;
+    width: 30%;
+}
+.main-container {
+    padding-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+  
+.main-container > div {
+  padding: 0px 10px;
+}
+.vision{
+    width: 100% !important;
+    height: 100% !important;
+    margin-top: 60px;
+}
+.result-detail{
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+.result-detail-content{
+    margin-left: 20px;
+    font-size: 16px;
+    border: dashed 0.5px black;
+    padding: 4px;
+    color: rgb(0, 129, 129);
+}
+.option-table{
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.header-class{
+    background-color: rgb(0, 153, 255);
+    font-size: 20px;
+}
+.Nan_class span{
+    color: red;
+}
+.pre-page{
+    margin-right: auto;
+    width: 200px;
+}
+.pre-button{
+    margin-top: 40px;
+    margin-bottom: 100px;
+    display: inline-block;
+    color: white;
+    line-height: 1.5;
+    border-radius: 4px;
+    border: 0px;
+    width: 100%;
+    background-color: rgb(137, 137, 137);
+    text-align: center;
+    font-size: 16px;
+    padding: 8px 12px;
+}
+@media screen and (max-width:1024px) {
+    .main-container{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .chart-container{
+        flex: 0 0 95%;
+        margin: 0 auto;
+        margin-bottom: 20px;
+    }
+}
