@@ -148,14 +148,11 @@
         </table>
 
         <div class="pre-page">
-<<<<<<< HEAD
-=======
             @if( $ifdirect == 1 )
             <button type="button" class="pre-button" onclick="location.href='{{ url('/front') }}'"><span>回首頁</span></button>
             @elseif( $ifdirect == 0 )
             <button type="button" class="pre-button" onclick="history.back()"><span>回上頁</span></button>
             @endif
->>>>>>> dev
         </div>
     </div>
 
