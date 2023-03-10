@@ -51,6 +51,7 @@
                 $(this).toggleClass('active');
             });
         });
+        
     </script>
     <div class="container">
         <div class="table-title flip">
