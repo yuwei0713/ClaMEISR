@@ -77,7 +77,11 @@
                     <span style="color:red">*</span>
                     </div>
                     <div class="input_style">
+<<<<<<< HEAD
                         <input id="student_name" name="student_name" class="student_name_style" type="text" placeholder="請輸入學生姓名" value="{{ old('student_name') }}">
+=======
+                        <input id="student_name" name="student_name" class="student_name_style" type="text" placeholder="請輸入學生姓名" maxlength="10" value="{{ old('student_name') }}">
+>>>>>>> dev
                     </div>
                 </div>
                 <div class="std_information_framwork" id="q2">
@@ -168,7 +172,11 @@
                             <span style="color:red">*</span>
                             </div>
                             <div class="input_style">
+<<<<<<< HEAD
                                 <input name="year" id="year" class="student_name_style" type="text" value="{{ $year }}">
+=======
+                                <input name="year" id="year" class="student_name_style" type="number" value="{{ $year }}" oninput="if(value.length>3)value=value.slice(0,3)">
+>>>>>>> dev
                             </div>
                         </div>
                         <div class="student_age_inner_framwork">
@@ -212,7 +220,11 @@
                     <span style="color:red">*</span>
                     </div>
                     <div class="input_style">
+<<<<<<< HEAD
                         <input name="quest_name" id="quest_name" class="student_name_style" type="text" value="{{ session('TeacherName') }}">
+=======
+                        <input name="quest_name" id="quest_name" class="student_name_style" type="text" value="{{ session('TeacherName') }}" readonly="readonly">
+>>>>>>> dev
                     </div>
                 </div>
                 @if($status == "confirm" )
@@ -283,7 +295,11 @@
                         </label>
                     </div>
                     <div id="other_living" class="input_style other_framework">
+<<<<<<< HEAD
                         <input name="living_other_content" id="living_other_content" class="other_style" type="text" value="" placeholder="請輸入其他同住者">
+=======
+                        <input name="living_other_content" id="living_other_content" class="other_style" type="text" value="" placeholder="請輸入其他同住者" maxlength="30">
+>>>>>>> dev
                     </div>
                     <div class="option_title">主要照顧者
                     <span style="color:red">*</span>
@@ -313,7 +329,11 @@
                         </div>
                     </div>
                     <div id="other_fst_attend" class="input_style other_framework">
+<<<<<<< HEAD
                         <input name="fst_attend_other" id="fst_attend_other_content" class="other_style" type="text" value="" placeholder="請輸入主要照顧者">
+=======
+                        <input name="fst_attend_other" id="fst_attend_other_content" class="other_style" type="text" value="" placeholder="請輸入主要照顧者" maxlength="20">
+>>>>>>> dev
                     </div>
                     <div class="option_title">次要照顧者</div>
                     <div>
@@ -341,7 +361,11 @@
                         </div>
                     </div>
                     <div id="other_sec_attend" class="input_style other_framework">
+<<<<<<< HEAD
                         <input name="sec_attend_other" id="sec_attend_other_content" class="other_style" type="text" value="" placeholder="請輸入次要照顧者">
+=======
+                        <input name="sec_attend_other" id="sec_attend_other_content" class="other_style" type="text" value="" placeholder="請輸入次要照顧者" maxlength="20">
+>>>>>>> dev
                     </div>
                 </div>
             </div>

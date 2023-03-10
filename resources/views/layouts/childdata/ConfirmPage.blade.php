@@ -58,7 +58,11 @@
         </label>
     </div>
     <div id="other_diagnosis" class="input_style other_framework">
+<<<<<<< HEAD
         <input name="diagnosis_other_content" id="diagnosis_other_content" class="other_style" type="text" value="" placeholder="請描述其他症狀">
+=======
+        <input name="diagnosis_other_content" id="diagnosis_other_content" class="other_style" type="text" value="" placeholder="請描述其他症狀" maxlength="20">
+>>>>>>> dev
     </div>
 </div>
 <!--第一項end-->

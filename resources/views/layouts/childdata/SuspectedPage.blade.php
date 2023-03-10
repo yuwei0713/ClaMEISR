@@ -58,7 +58,11 @@
         </label>
     </div>
     <div id="suspected_other_diagnosis" class="input_style other_framework">
+<<<<<<< HEAD
         <input name="diagnosis_other_content" id="suspected_diagnosis_other_content" class="other_style" type="text" value="" placeholder="請描述其他症狀">
+=======
+        <input name="suspected_diagnosis_other_content" id="suspected_diagnosis_other_content" class="other_style" type="text" value="" placeholder="請描述其他症狀" maxlength="20">
+>>>>>>> dev
     </div>
 </div>
 <!--第一項end-->
@@ -69,7 +73,11 @@
     </div>
     <div class="diagnosis">
         <label class="diagnosis_textarea_framwork">
+<<<<<<< HEAD
             <textarea class="diagnosis_textarea_content" id="note" name="note" rows="3" placeholder="請描述疑似症狀"></textarea>
+=======
+            <textarea class="diagnosis_textarea_content" id="note" name="note" rows="3" placeholder="請描述疑似症狀" maxlength="100"></textarea>
+>>>>>>> dev
         </label>
     </div>
 </div>
