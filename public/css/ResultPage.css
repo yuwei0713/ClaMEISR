@@ -1,0 +1,45 @@
+body{
+    font-size: 22px;
+}
+th{
+    padding: 0 10px;
+    border: solid;
+    text-align: center;
+}
+td{
+    text-align: center;
+    border: solid 2px gray;
+}
+button{
+    border:none;
+    background-color: white;
+    color: rgb(0, 132, 255);
+}
+.option-table{
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+.table-out-framework{
+    width: 100%;
+    text-align:center
+}
+.table-inner-framework{
+    margin: 0 auto;
+}
+.pre-page{
+    margin: 0 auto;
+    width: 200px;
+}
+.pre-button{
+    display: inline-block;
+    color: white;
+    line-height: 1.5;
+    border-radius: 4px;
+    border: 0px;
+    width: 100%;
+    background-color: rgb(137, 137, 137);
+    text-align: center;
+    font-size: 16px;
+    padding: 8px 12px;
+}
