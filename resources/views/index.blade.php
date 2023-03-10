@@ -547,11 +547,7 @@
                                                 <div class="option_title">
                                                 <span style="color:red">*</span>姓名：</div>
                                                 <div class="input_style">
-<<<<<<< HEAD
-                                                    <input name="TeacherName" id="TeacherName" class="text_style" type="text" value="{{ $TeacherData["TeacherName"] }}">
-=======
                                                     <input name="TeacherName" id="TeacherName" class="text_style" type="text" value="{{ $TeacherData["TeacherName"] }}" maxlength="10">
->>>>>>> dev
                                                     <div id="name_fill_alart" class="fill-alart"></div>
                                                 </div>
                                             </label>

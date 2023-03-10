@@ -79,10 +79,6 @@ class OpenController extends Controller
     //幼兒基本資料 接收與處理
     public function ReceiveChildInformation(Request $request)
     {
-<<<<<<< HEAD
-        //dd($request);
-=======
->>>>>>> dev
         $account = Auth::user()->username;
         //dd($request);
 

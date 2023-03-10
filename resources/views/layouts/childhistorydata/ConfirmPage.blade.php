@@ -1,12 +1,4 @@
 <!--第一項-->
-<<<<<<< HEAD
-<script>
-    $(document).ready(function() {
-        $(".manual_option").css("display", "block");
-    });
-</script>
-=======
->>>>>>> dev
 <div class="std_information_framwork" id="q10">
     <div class="option_title">障礙類別(單選)
     <span style="color:red">*</span>
@@ -124,14 +116,6 @@
     </div>
     <div id="other_diagnosis" class="input_style other_framework">
         @if($ChildFullData['Diagnosis'] == "other")
-<<<<<<< HEAD
-        <input name="diagnosis_other_content" id="diagnosis_other_content" class="other_style" type="text" value="{{ $ChildFullData['OtherDiagnosis'] }}" placeholder="請描述其他症狀">
-        @else
-        <input name="diagnosis_other_content" id="diagnosis_other_content" class="other_style" type="text" value="" placeholder="請描述其他症狀">
-        @endif
-    </div>
-</div>
-=======
         <input name="diagnosis_other_content" id="diagnosis_other_content" class="other_style" type="text" value="{{ $ChildFullData['OtherDiagnosis'] }}" placeholder="請描述其他症狀" maxlength="20">
         @else
         <input name="diagnosis_other_content" id="diagnosis_other_content" class="other_style" type="text" value="" placeholder="請描述其他症狀" maxlength="20">
@@ -147,7 +131,6 @@
         @endif
     });
 </script>
->>>>>>> dev
 <!--第一項end-->
 <!--第二項-->
 <div class="std_information_framwork manual_option" id="q11">

@@ -130,15 +130,9 @@ class QuestionnaireController extends Controller
                         $CheckFillTime = (new QuestionTable)->GetFillTime($StudentID, $QuestionCode, $CurrentYear, $Semester);
                         $CurrentData = $StudentID . "-" . $QuestionCode . "-" . $CurrentYear . "-" . $Semester . "-" . $FillTime; //問卷結果比較用
                         if ($CheckFillTime >= 2) { //填寫次數大於兩次 歷史紀錄比較可以查詢
-<<<<<<< HEAD
-                            return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $CurrentData)->with("ifcompare", 1);
-                        } else { //填寫次數小於兩次 歷史紀錄比較不能查詢
-                            return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $CurrentData)->with("ifcompare", 0);
-=======
                             return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $CurrentData)->with("ifcompare", 1)->with("ifdirect", 1);
                         } else { //填寫次數小於兩次 歷史紀錄比較不能查詢
                             return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $CurrentData)->with("ifcompare", 0)->with("ifdirect", 1);
->>>>>>> dev
                         }
                     } else {
                         session()->flash('errormessage', '保存失敗，請重新嘗試!');
@@ -199,17 +193,10 @@ class QuestionnaireController extends Controller
         $CheckFillTime = (new QuestionTable)->GetFillTime($StudentID, $QuestionCode, $SchoolYear, $Semester);
         $ChildData = (new ChildInformationTable)->PushChildBasicData($StudentID);
         [$GradeData, $TopicName] = (new QuestionTable)->GetGradeData($StudentID, $QuestionCode, $FillTime, $SchoolYear, $Semester);
-        //dd($request->resultdata);
         if ($CheckFillTime >= 2) { //填寫次數大於兩次 歷史紀錄比較可以查詢
-<<<<<<< HEAD
-            return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $request->resultdata)->with("ifcompare", 1);
-        } else { //填寫次數小於兩次 歷史紀錄比較不能查詢
-            return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $request->resultdata)->with("ifcompare", 0);
-=======
             return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $request->resultdata)->with("ifcompare", 1)->with("ifdirect", 0);
         } else { //填寫次數小於兩次 歷史紀錄比較不能查詢
             return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $request->resultdata)->with("ifcompare", 0)->with("ifdirect", 0);
->>>>>>> dev
         }
     }
     public function PushDetailResult(Request $request)

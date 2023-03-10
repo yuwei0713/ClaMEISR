@@ -27,12 +27,8 @@ function checkoutput() {
     let proofsvalues;
     var manual;
     var diagnosis;
-<<<<<<< HEAD
-    var diagnosis_other;
-=======
     var confirm_diagnosis_other;
     var suspected_diagnosis_other;
->>>>>>> dev
     var degree;
     var placement;
     var diagnosis_other_textarea;
@@ -43,12 +39,8 @@ function checkoutput() {
         manual = document.querySelector('input[name="manual"]:checked'); //是否領有身障手冊
         try {
             diagnosis = document.querySelector('input[name="diagnosis"]:checked'); //診斷
-<<<<<<< HEAD
-            diagnosis_other = document.querySelectorAll('input[name="diagnosis_other_content"]:checked').value;
-=======
             confirm_diagnosis_other = document.getElementById("diagnosis_other_content").value;
             suspected_diagnosis_other = document.getElementById("suspected_diagnosis_other_content").value;
->>>>>>> dev
             degree = document.querySelector('input[name="degree"]:checked'); //障礙程度
             if (diagnosis.value == "發展遲緩") {
                 identities = document.querySelectorAll('input[name="identities[]"]:checked'); //鑑定安置類別
@@ -149,11 +141,7 @@ function checkoutput() {
         } else {
             document.getElementById("q9").style.border = "none";
         }
-<<<<<<< HEAD
-        if (diagnosis == null || diagnosis_other == "") {
-=======
         if (diagnosis == null || (diagnosis.value == "other" && confirm_diagnosis_other == "")) {
->>>>>>> dev
             document.getElementById("q10").style.border = "3px solid #FF006F";
             if (flag == 0) {
                 document.location.hash = "#q10";
@@ -161,11 +149,7 @@ function checkoutput() {
             }
         } else {
             document.getElementById("q10").style.border = "none";
-<<<<<<< HEAD
-            if (degree == null) {
-=======
             if (degree == null && diagnosis.value != "other") {
->>>>>>> dev
                 document.getElementById("q11").style.border = "3px solid #FF006F";
                 if (flag == 0) {
                     document.location.hash = "#q11";
@@ -216,11 +200,7 @@ function checkoutput() {
         } else {
             document.getElementById("sq9").style.border = "none";
         }
-<<<<<<< HEAD
-        if (diagnosis == null || diagnosis_other == "") {
-=======
         if (diagnosis == null || (diagnosis.value == "other" && suspected_diagnosis_other == "")) {
->>>>>>> dev
             document.getElementById("sq10").style.border = "3px solid #FF006F";
             if (flag == 0) {
                 document.location.hash = "#sq10";

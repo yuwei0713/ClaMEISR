@@ -78,11 +78,7 @@
                     <span style="color:red">*</span>
                     </div>
                     <div class="input_style">
-<<<<<<< HEAD
-                        <input id="student_name" name="student_name" class="student_name_style" type="text" value="{{ $ChildFullData['StudentName'] }}">
-=======
                         <input id="student_name" name="student_name" class="student_name_style" type="text" value="{{ $ChildFullData['StudentName'] }}" maxlength="10">
->>>>>>> dev
                     </div>
                 </div>
                 <div class="std_information_framwork" id="q2">
@@ -191,11 +187,7 @@
                             <span style="color:red">*</span>
                             </div>
                             <div class="input_style">
-<<<<<<< HEAD
-                                <input name="year" id="year" class="student_name_style" type="text" value="{{ $ChildFullData['Year'] }}">
-=======
                                 <input name="year" id="year" class="student_name_style" type="number" value="{{ $ChildFullData['Year'] }}" oninput="if(value.length>3)value=value.slice(0,3)">
->>>>>>> dev
                             </div>
                         </div>
                         <div class="student_age_inner_framwork">
@@ -239,11 +231,7 @@
                     <span style="color:red">*</span>
                     </div>
                     <div class="input_style">
-<<<<<<< HEAD
-                        <input name="quest_name" id="quest_name" class="student_name_style" type="text" value="{{ $TeacherName }}">
-=======
                         <input name="quest_name" id="quest_name" class="student_name_style" readonly="readonly" type="text" value="{{ $TeacherName }}">
->>>>>>> dev
                     </div>
                 </div>
                 @if($ChildFullData['Status'] == "confirm" )
@@ -340,15 +328,9 @@
                     </div>
                     <div id="other_living" class="input_style other_framework">
                         @if($ChildFullData['OtherResident'] == "" || $ChildFullData['OtherResident'] == null)
-<<<<<<< HEAD
-                        <input name="living_other_content" id="living_other_content" class="other_style" type="text" value="" placeholder="請輸入其他同住者">
-                        @else
-                        <input name="living_other_content" id="living_other_content" class="other_style" type="text" value="{{ $ChildFullData['OtherResident'] }}" placeholder="請輸入其他同住者">
-=======
                         <input name="living_other_content" id="living_other_content" class="other_style" type="text" value="" placeholder="請輸入其他同住者" maxlength="30">
                         @else
                         <input name="living_other_content" id="living_other_content" class="other_style" type="text" value="{{ $ChildFullData['OtherResident'] }}" placeholder="請輸入其他同住者" maxlength="30">
->>>>>>> dev
                         @endif
                     </div>
                     <div class="option_title">主要照顧者
@@ -408,15 +390,9 @@
                         @php
                         $OtherFst = str_replace("other-", "", $ChildFullData['Fst-attend']);
                         @endphp
-<<<<<<< HEAD
-                        <input name="fst_attend_other" id="fst_attend_other_content" class="other_style" type="text" value="{{ $OtherFst }}" placeholder="請輸入主要照顧者">
-                        @else
-                        <input name="fst_attend_other" id="fst_attend_other_content" class="other_style" type="text" value="" placeholder="請輸入主要照顧者">
-=======
                         <input name="fst_attend_other" id="fst_attend_other_content" class="other_style" type="text" value="{{ $OtherFst }}" placeholder="請輸入主要照顧者" maxlength="20">
                         @else
                         <input name="fst_attend_other" id="fst_attend_other_content" class="other_style" type="text" value="" placeholder="請輸入主要照顧者" maxlength="20">
->>>>>>> dev
                         @endif
                     </div>
                     <div class="option_title">次要照顧者</div>
@@ -474,15 +450,9 @@
                         @php
                         $OtherSec = str_replace("other-", "", $ChildFullData['Sec-attend']);
                         @endphp
-<<<<<<< HEAD
-                        <input name="sec_attend_other" id="sec_attend_other_content" class="other_style" type="text" value="{{ $OtherSec }}" placeholder="請輸入次要照顧者">
-                        @else
-                        <input name="sec_attend_other" id="sec_attend_other_content" class="other_style" type="text" value="" placeholder="請輸入次要照顧者">
-=======
                         <input name="sec_attend_other" id="sec_attend_other_content" class="other_style" type="text" value="{{ $OtherSec }}" placeholder="請輸入次要照顧者" maxlength="20">
                         @else
                         <input name="sec_attend_other" id="sec_attend_other_content" class="other_style" type="text" value="" placeholder="請輸入次要照顧者" maxlength="20">
->>>>>>> dev
                         @endif
                     </div>
                 </div>

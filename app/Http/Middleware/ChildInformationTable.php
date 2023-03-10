@@ -264,16 +264,12 @@ class ChildInformationTable
             $diagnosis = $request['diagnosis']; //障礙類別
             if ($request['diagnosis_other_content']) { //其他症狀描述
                 $diagnosis = "other";
-<<<<<<< HEAD
-                $other_diagnosis = $request['diagnosis_other_content']; // 診斷 選項或是其他 合併
-=======
                 if($request['status'] == "confirm"){
                     $other_diagnosis = $request['diagnosis_other_content']; // 診斷 選項或是其他 合併
                 }
                 if($request['status'] == "suspected"){
                     $other_diagnosis = $request['suspected_diagnosis_other_content']; 
                 }
->>>>>>> dev
             }
             $degree = $request['degree']; //障礙程度
 
@@ -414,12 +410,6 @@ class ChildInformationTable
             }
 
             $diagnosis = $request['diagnosis']; //障礙類別
-<<<<<<< HEAD
-            if ($request['diagnosis_other_content']) { //其他症狀描述
-                $diagnosis = "other";
-                $other_diagnosis = $request['diagnosis_other_content']; // 診斷 選項或是其他 合併
-            }
-=======
             if($request['status'] == "confirm"){
                 if ($request['diagnosis_other_content']) { //其他症狀描述
                     $diagnosis = "other";
@@ -432,8 +422,6 @@ class ChildInformationTable
                     $other_diagnosis = $request['suspected_diagnosis_other_content']; // 診斷 選項或是其他 合併
                 }
             }
-            
->>>>>>> dev
             $degree = $request['degree']; //障礙程度
             
             if ($diagnosis == "發展遲緩") {
