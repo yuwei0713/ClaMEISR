@@ -69,18 +69,7 @@ function inputsearch() {
     });
 }
 
-/*function qinputsearch() {
-    var searchStyle = document.getElementById('q-search');
-    document.getElementById('qsearch-input').addEventListener('input', function () {
-        if (!this.value) {
-            searchStyle.innerHTML = "";
-            return;
-        }
-        // look ma, no indexOf!
-        searchStyle.innerHTML = ".qwrap:not([data-qindex*=\"" + this.value.toLowerCase() + "\"]) { display: none; }";
-        // beware of css injections!
-    });
-}*/
+
 
 $(document).ready(function () {
     $('input[name="class[]"]').click(function () {
@@ -141,70 +130,7 @@ $(document).ready(function () {
         }
     })
 
-    /*$('input[name="qclass[]"]').click(function () {
-        var qclassoption = document.querySelectorAll('input[name="qclass[]"]');
-        var qclasscheckoption = document.querySelectorAll('input[name="qclass[]"]:checked');
-        let qclassvalues = [];
-        let qclasscheckvalues = [];
-        qclassoption.forEach((qclassoption) => {
-            qclassvalues.push(qclassoption.value);
-        });
-        qclasscheckoption.forEach((qclasscheckoption) => {
-            qclasscheckvalues.push(qclasscheckoption.value);
-        });
-        console.log(qclassvalues);
-        if (qclasscheckvalues.length != 0) {
-            for (var i = 0; i < qclassvalues.length; i++) {
-                if (qclasscheckvalues.includes(qclassvalues[i])) { //顯示
-                    showid = "qsearch-" + qclassvalues[i];
-                    for(var j = 0 ; j< document.getElementsByName(showid).length ; j++){
-                        document.getElementsByName(showid)[j].style.display = "block";
-                    }
-                } else { //不顯示
-                    showid = "qsearch-" + qclassvalues[i];
-                    for(var j = 0 ; j< document.getElementsByName(showid).length ; j++){
-                        document.getElementsByName(showid)[j].style.display = "none";
-                    }
-                }
-            }
-        } else {
-            for (var i = 0; i < qclassvalues.length; i++) {
-                showid = "qsearch-" + qclassvalues[i];
-                for(var j = 0 ; j< document.getElementsByName(showid).length ; j++){
-                    document.getElementsByName(showid)[j].style.display = "block";
-                }
-            }
-        }
-    })
-
-    $('input[name="qyear[]"]').click(function () {
-        var yearoption = document.querySelectorAll('input[name="qyear[]"]');
-        var yearcheckoption = document.querySelectorAll('input[name="qyear[]"]:checked');
-        let yearvalues = [];
-        let yearcheckvalues = [];
-        yearoption.forEach((yearoption) => {
-            yearvalues.push(yearoption.value);
-        });
-        yearcheckoption.forEach((yearcheckoption) => {
-            yearcheckvalues.push(yearcheckoption.value);
-        });
-        if (yearcheckvalues.length != 0) {
-            for (var i = 0; i < yearvalues.length; i++) {
-                if (yearcheckvalues.includes(yearvalues[i])) { //顯示
-                    showid = "qsearch-" + yearvalues[i];
-                    document.getElementById(showid).style.display = "block";
-                } else { //不顯示
-                    showid = "qsearch-" + yearvalues[i];
-                    document.getElementById(showid).style.display = "none";
-                }
-            }
-        } else {
-            for (var i = 0; i < yearvalues.length; i++) {
-                showid = "qsearch-" + yearvalues[i];
-                document.getElementById(showid).style.display = "block";
-            }
-        }
-    })*/
+    
 })
 
 
