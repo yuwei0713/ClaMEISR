@@ -399,7 +399,7 @@ ul li {
 input[type="search"]::-webkit-search-cancel-button{
     -webkit-appearance: none;
 }
-.searchBox-framework svg{
+.searchBox-framework img{
     position: relative;
     left: 80%;
     top: 28%;
@@ -643,7 +643,19 @@ input[type="search"]::-webkit-search-cancel-button{
         display: flex;
         flex-direction: column;
     }
-
+    .search{
+        flex-wrap: wrap;
+    }
+    .multiSelect{
+        width: 12em;
+    }
+    .searchBox-framework img{
+        left: 93%;
+        top: 30%;
+    }
+    .searchBox-framework {
+        margin-left: 0;
+    }
     .content_body .content_size {
         max-width: 600px;
         width: 100%;
@@ -710,5 +722,11 @@ input[type="search"]::-webkit-search-cancel-button{
 @media screen and (max-width:450px) {
     .content_body .content_size {
         max-width: 300px;
+    }
+    .searchBox-framework img{
+        display: none;
+    }
+    .search{
+        justify-content: flex-start;
     }
 }
