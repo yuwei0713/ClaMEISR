@@ -35,14 +35,14 @@ function checkhistoryteacherdatasend(){
     }
 }
 
-function checkchildsend() {
+function checkchildsend(questioncode) {
     document.getElementById("fill_alart").style.display = "none";
     var getSelectedValue = document.querySelector('input[name="child"]:checked');
     if (getSelectedValue == null)
         document.getElementById("checkchild_fill_alart").textContent = "尚未選擇幼兒!"
     else {
         document.getElementById("checkchild_fill_alart").style.display = "none";
-        document.getElementById("ChooseChild").submit();
+        document.getElementById("ChooseChild"+questioncode).submit();
     }
 }
 function checkstatussend() {

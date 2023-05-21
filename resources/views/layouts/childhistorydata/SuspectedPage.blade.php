@@ -257,7 +257,7 @@
     <span style="color:red">*</span>
     </div>
     <div class="diagnosis">
-        <label class="diagnosis_framwork diagnosis_framework_three">
+        <label class="diagnosis_framwork diagnosis_framework_two">
             @if(preg_match("/心理衡鑑/",$ChildFullData['Proofs']))
             <input class="option_square" type="checkbox" name="proofs[]" value="心理衡鑑定（醫院）" checked>
             @else
@@ -265,7 +265,7 @@
             @endif
             <span class="choice-css">心理衡鑑定（醫院）</span>
         </label>
-        <label class="diagnosis_framwork diagnosis_framework_three">
+        <label class="diagnosis_framwork diagnosis_framework_two">
             @if(preg_match("/聯評報告/",$ChildFullData['Proofs']))
             <input class="option_square" type="checkbox" name="proofs[]" value="聯評報告" checked>
             @else
@@ -273,13 +273,21 @@
             @endif
             <span class="choice-css">聯評報告</span>
         </label>
-        <label class="diagnosis_framwork diagnosis_framework_three">
+        <label class="diagnosis_framwork diagnosis_framework_two">
             @if(preg_match("/特殊教育心評/",$ChildFullData['Proofs']))
             <input class="option_square" type="checkbox" name="proofs[]" value="特殊教育心評" checked>
             @else
             <input class="option_square" type="checkbox" name="proofs[]" value="特殊教育心評">
             @endif
             <span class="choice-css">特殊教育心評</span>
+        </label>
+        <label class="diagnosis_framwork diagnosis_framework_two">
+            @if(preg_match("/無法提供資料/",$ChildFullData['Proofs']))
+            <input class="option_square" type="checkbox" name="proofs[]" value="無法提供資料" checked>
+            @else
+            <input class="option_square" type="checkbox" name="proofs[]" value="無法提供資料">
+            @endif
+            <span class="choice-css">無法提供資料</span>
         </label>
     </div>
 </div>

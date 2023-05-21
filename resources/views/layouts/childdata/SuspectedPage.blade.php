@@ -137,17 +137,21 @@
     <span style="color:red">*</span>
     </div>
     <div class="diagnosis">
-        <label class="diagnosis_framwork diagnosis_framework_three">
+        <label class="diagnosis_framwork diagnosis_framework_two">
             <input class="option_square" type="checkbox" name="proofs[]" value="心理衡鑑">
             <span class="choice-css">心理衡鑑定（醫院）</span>
         </label>
-        <label class="diagnosis_framwork diagnosis_framework_three">
+        <label class="diagnosis_framwork diagnosis_framework_two">
             <input class="option_square" type="checkbox" name="proofs[]" value="聯評報告">
             <span class="choice-css">聯評報告</span>
         </label>
-        <label class="diagnosis_framwork diagnosis_framework_three">
+        <label class="diagnosis_framwork diagnosis_framework_two">
             <input class="option_square" type="checkbox" name="proofs[]" value="特殊教育心評">
             <span class="choice-css">特殊教育心評</span>
+        </label>
+        <label class="diagnosis_framwork diagnosis_framework_two">
+            <input class="option_square" type="checkbox" name="proofs[]" value="無法提供資料">
+            <span class="choice-css">無法提供資料</span>
         </label>
     </div>
 </div>

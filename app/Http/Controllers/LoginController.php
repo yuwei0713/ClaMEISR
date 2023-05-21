@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use App\Http\Middleware\LandRSchool;
-use App\Http\Middleware\TeacherData;
+use App\Models\LandRSchool;
+use App\Models\TeacherData;
 
 class LoginController extends Controller
 {

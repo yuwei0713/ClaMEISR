@@ -20,10 +20,7 @@ use App\Http\Controllers\RegisterController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/welcome', function(){
-    return view('app');
-});
-
+Route::get('/', [OpenController::class, 'frontdirect']);
 Route::get('/front', [OpenController::class, 'index'])->name('front.show');
 
 Route::group(['middleware' => ['guest']], function () {

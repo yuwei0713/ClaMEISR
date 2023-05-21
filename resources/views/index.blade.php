@@ -12,8 +12,10 @@
     <link href="../css/slick-1.8.1/slick/slick-theme.css" rel="stylesheet" type="text/css"></link>
     <script src="../js/slick-1.8.1/slick/slick.min.js"></script>
     <script src="../js/banner.js"></script>
+    
     <link href="../css/first_page_layout.css" rel="stylesheet">
     <link href="../css/header.css" rel="stylesheet">
+    <script src="../js/search.js"></script>
 </head>
 
 <body>
@@ -336,16 +338,69 @@
                                 </div>
                                 <button id="fill" class="btn btn-info" onclick="jumptostatussend('childhistorycard')">開始填寫</button>
                                 @elseif($flag == 1)
+                                <!-- 搜尋欄位-->
+                                <div class="search" id="childsearch">
+                                    <div class="multiSelect">
+                                        <span class="selectTitle">入學年度</span>
+                                        <div class="selectContent">
+                                            <div class="selectBtn" data-title="全部" id="searchyear"></div>
+                                            <div class="optionGroup">
+                                                @foreach ( $ChildData as $cdata=>$cdata_class)
+                                                    @if (!empty($cdata_class))
+                                                    @php
+                                                    $searchyear = str_replace('年度','',$cdata);
+                                                    @endphp
+                                                    <label><input type="checkbox" name="year[]" value="{{ $searchyear }}">{{ $cdata }}</label>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="multiSelect">
+                                        <span class="selectTitle">班級</span>
+                                        <div class="selectContent">
+                                            <div class="selectBtn" data-title="全部" id="searchyear"></div>
+                                            <div class="optionGroup">
+                                            @foreach ( $ChildData as $cdata=>$cdata_class)
+                                                @if (!empty($cdata_class))
+                                                    @foreach( $cdata_class as $cdata_title=>$cdata_value )
+                                                        <label>
+                                                            <input type="checkbox" name="class[]" value="{{ $cdata_title }}">{{ $cdata_title }}
+                                                        </label>
+                                                    @endforeach
+                                                    @break
+                                                @endif
+                                            @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="multiSelect searchBox-framework">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                          </svg>
+                                        <input type="search" id="search-input" class="light-table-filter searchBox" data-table="order-table" placeholder="輸入座號或姓名">
+                                    </div>
+                                    <style id="m-search"></style>
+                                    <script>
+                                        
+                                    </script>
+                                </div>
+                                <!-- 搜尋欄位 end-->
                                 <form action="{{ route('child.history.information.show') }}" method="GET" id="ChooseHistory">
                                     @csrf
                                     @foreach ( $ChildData as $cdata=>$cdata_class)
                                     @if (!empty($cdata_class))
-                                    <div class="yearframwork">
+                                    @php
+                                    $searchyear = str_replace('年度','',$cdata);
+                                    @endphp
+                                    <div class="yearframwork" id="search-{{ $searchyear }}">
                                         <div class="yearcontent">{{ $cdata }}</div>
                                         @foreach( $cdata_class as $cdata_title=>$cdata_value )
-                                        <div class="classcontent">{{ $cdata_title }}</div>
-                                        <div class="student_framework">
-                                            @for( $i = 0 ;$i < count($cdata_value) ; $i++ ) <label class="student_option">
+                                        <div id="search-{{ $cdata_title }}">
+                                            <div class="classcontent">{{ $cdata_title }}</div>
+                                            <div class="student_framework">
+                                            @for( $i = 0 ;$i < count($cdata_value) ; $i++ )
+                                            <label class="student_option wrap" data-index="{{ $cdata_value[$i]['ChildName'] }}-{{ $cdata_value[$i]['ChildNumber'] }}">
                                                 <span class="option_position">
                                                     <input class="student_circle" type="radio" name="historychild" value="{{ $cdata_value[$i]['ChildValue'] }}">
                                                 </span>
@@ -353,8 +408,9 @@
                                                     <span class="option_value">姓名：{{ $cdata_value[$i]['ChildName'] }}</span>
                                                     <span class="option_value">座號：{{ $cdata_value[$i]['ChildNumber'] }}</span>
                                                 </div>
-                                                </label>
-                                                @endfor
+                                            </label>
+                                            @endfor
+                                        </div>
                                         </div>
                                         @endforeach
                                     </div>                                    
@@ -393,7 +449,8 @@
                 </ul>
             </div>
             @if($flag == 0)
-                        @for( $i = 0;$i < count($Questionnaire) ;$i++ ) <!--問卷Modal-->
+                        @for( $i = 0;$i < count($Questionnaire) ;$i++ ) 
+                        <!--問卷Modal-->
                             <div id="childcard{{$Questionnaire[$i]->QuestionCode}}" class="modal fade">
                                 <div class="modal-dialog modal-dialog-centered modal" role="document">
                                     <div class="modal-content">
@@ -427,16 +484,23 @@
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{ route('user.ClaMEISER.show') }}" method="GET" id="ChooseChild">
-                                                <input name="QuestionCode" id="QuestionCode" type="hidden" value="">
+                                
+                                            <form action="{{ route('user.ClaMEISER.show') }}" method="GET" id="ChooseChild{{$QuestionCode}}">
+                                                @csrf
+                                                <input name="QuestionCode" id="QuestionCode" type="hidden" value="{{$QuestionCode}}">
                                                 @foreach ( $ChildData as $cdata=>$cdata_class)
                                                 @if (!empty($cdata_class))
-                                                <div class="yearframwork">
+                                                @php
+                                                $searchyear = str_replace('年度','',$cdata);
+                                                @endphp
+                                                <div class="yearframwork" name="qsearch-{{$searchyear}}">
                                                     <div class="yearcontent">{{ $cdata }}</div>
                                                     @foreach( $cdata_class as $cdata_title=>$cdata_value )
+                                                    <div name="qsearch-{{ $cdata_title }}">
                                                     <div class="classcontent">{{ $cdata_title }}</div>
                                                     <div class="student_framework">
-                                                        @for( $i = 0 ;$i < count($cdata_value) ; $i++ ) <label class="student_option">
+                                                        @for( $i = 0 ;$i < count($cdata_value) ; $i++ ) 
+                                                        <label class="student_option qwrap" data-qindex="{{ $cdata_value[$i]['ChildName'] }}-{{ $cdata_value[$i]['ChildNumber'] }}">
                                                             <span class="option_position">
                                                                 <input class="student_circle" type="radio" name="child" value="{{ $cdata_value[$i]['ChildValue'] }}">
                                                             </span>
@@ -445,16 +509,17 @@
                                                                 <span class="option_value">座號：{{ $cdata_value[$i]['ChildNumber'] }}</span>
                                                                 <span class="option_value">填寫：{{ $cdata_value[$i]['FillStatus'] }}</span>
                                                             </div>
-                                                            </label>
+                                                        </label>
                                                         @endfor
                                                     </div>
+                                                </div>
                                                     @endforeach
                                                 </div>
                                                 @endif
                                                 @endforeach
 
                                                 <div class="next-page">
-                                                    <button type="button" class="btn btn-secondary" onclick="checkchildsend()">確定</button>
+                                                    <button type="button" class="btn btn-secondary" onclick="checkchildsend({{$QuestionCode}})">確定</button>
                                                     <div id="checkchild_fill_alart" class="fill-alart"></div>
                                                 </div>
                                             </form>
@@ -590,6 +655,12 @@
                 </div>
         @endif
     </div>
+    <script>
+        window.onload = function() {
+            initsearch();
+            inputsearch();
+        }
+    </script>
     @endauth
     @guest
     <div>

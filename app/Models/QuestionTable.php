@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Models;
 
 use GrahamCampbell\ResultType\Success;
 use Illuminate\Support\Facades\DB;
@@ -208,6 +208,7 @@ class QuestionTable
          *                 填寫狀態 (字串 已處理好的)
          *                 Value => 學年，班級，座號，姓名，年齡，填寫次數，填寫狀態
          */
+        $ReturnBasicData = $BasicData;
         $ReturnArray = array();
         for ($i = 0; $i < count($QuestionData); $i++) {
             //獲取問卷代碼
@@ -249,10 +250,10 @@ class QuestionTable
                             }
                         }
                     }
-                    $BasicData[$yeartitle][$classname] = $DetailData; //把原本的陣列內容取代
+                    $ReturnBasicData[$yeartitle][$classname] = $DetailData; //把原本的陣列內容取代
                 }
             };
-            $QuestionArray = array("代號" . $QuestionCode => $BasicData);
+            $QuestionArray = array("代號" . $QuestionCode => $ReturnBasicData);
             $ReturnArray = array_merge($ReturnArray, $QuestionArray);
         }
         return $ReturnArray;

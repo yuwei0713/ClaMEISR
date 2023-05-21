@@ -14,7 +14,10 @@
 <script>
     $(document).ready(function(){
         setTimeout(() =>{
-            document.getElementById('alert').style.display = 'none';
+            var alertset = document.getElementById('alert');
+            if(alertset != null){
+                alertset.style.display = 'none';
+            }
         },3500);
     });
 </script>

@@ -5,6 +5,11 @@
         <div class="header_left">
             <div class="toplink"></div>
             @auth
+            <div>
+                <span id="countdowntime" class="countdown-framework"></span>
+                <script src="../js/ifvisible.js" type="text/javascript"></script>
+                <script src="../js/countdownworker.js" type="text/javascript"></script>
+            </div>
             {{auth()->user()->name}}
             <div class="UserCss" style="margin-right: 10px;">
                 您好~

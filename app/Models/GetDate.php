@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Models;
 
 
 class GetDate
@@ -8,6 +8,7 @@ class GetDate
     public function GetYearSemester()
     {
         $CurrentYear = date('Y') - 1911;
+        
         $taiwan_month = date('m');
         $CurrentSemester = "";
         $Filldate = date('Y-m-d');

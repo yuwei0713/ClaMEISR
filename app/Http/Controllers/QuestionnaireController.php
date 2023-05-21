@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Middleware\ChildInformationTable;
+use App\Models\ChildInformationTable;
 use Illuminate\Http\Request;
-use App\Http\Middleware\QuestionnaireUnify;
-use App\Http\Middleware\QuestionTable;
-use App\Http\Middleware\GetDate;
+use App\Models\QuestionnaireUnify;
+use App\Models\QuestionTable;
+use App\Models\GetDate;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Support\Facades\Auth;
 

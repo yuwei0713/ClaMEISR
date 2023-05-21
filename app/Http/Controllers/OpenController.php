@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Middleware\ChildInformationTable;
-use App\Http\Middleware\GetDate;
-use App\Http\Middleware\QuestionTable;
-use App\Http\Middleware\TeacherData;
+use App\Models\ChildInformationTable;
+use App\Models\GetDate;
+use App\Models\QuestionTable;
+use App\Models\TeacherData;
 use Illuminate\Support\Facades\Auth;
 
 class OpenController extends Controller
 {
+    public function frontdirect(){
+        return redirect('front');
+    }
     //首頁呈現
     public function index()
     {
-
         if (Auth::check()) {
             $account = Auth::user()->username;
             $userschool = Auth::user()->schoolnumber;
@@ -29,7 +31,6 @@ class OpenController extends Controller
             }
             [$CurrentYear, $Semester] = (new GetDate)->GetYearSemester();
             $ChildData = (new ChildInformationTable)->GetChildBasic($account, $userschool, $CurrentYear); //幼兒基本資料 for 歷史紀錄使用
-            //dd(Auth::user());
             /**
              * 幼兒資料與問卷填寫次數 基本資料 + 問卷代號 + 問卷填寫次數
              * 填寫次數為0時，不需有填寫狀態
@@ -43,6 +44,7 @@ class OpenController extends Controller
             } else {
                 [$CurrentYear, $Semester] = (new GetDate)->GetYearSemester();
                 $ChildAndFill = (new QuestionTable)->GetFillStatus($userschool, $ChildData, $Questionnaire, $CurrentYear, $Semester);
+                //dd($ChildData);
                 return view('index')->with('Fillflag', 0)->with('flag', 1)->with('ChildAndFill', $ChildAndFill)->with('ChildData', $ChildData)->with("Questionnaire", $Questionnaire)->with("TeacherData", $BasicTeacherData);
             }
         } else {
@@ -141,7 +143,6 @@ class OpenController extends Controller
         if ($ChildFullData == false) {
             return redirect('front');
         }
-        //return view('ChildHistoryInformation')->with('ChildFullData',$ChildFullData);
         [$CurrentYear, $Semester] = (new GetDate)->GetYearSemester(); //計算民國年次 西元轉民國
         [$SchoolName, $Class] = (new ChildInformationTable)->PushBasicData($SchoolCode);
         return view('ChildHistoryInformation')->with('ChildFullData', $ChildFullData)->with('Class', $Class)->with('TeacherName', $TeacherName);

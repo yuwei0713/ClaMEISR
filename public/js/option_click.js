@@ -13,8 +13,8 @@ function checkoutput(flag) {
             let tablename = "Topic" + i;
             var cells = document.getElementById(tablename).value;
             var fill_count = 0;
-            for (var j = 1; j < cells; j++) {
-                let option_name = "q"+ i + "-" + j;
+            for (var j = 1; j <= cells; j++) {
+                let option_name = "q" + i + "-" + j;
                 var getSelectedValue = document.querySelector('input[name="' + option_name + '"]:checked');
                 if (getSelectedValue == null) {
                     if (document.getElementById(option_name).classList.contains("over_age")) {
@@ -34,13 +34,15 @@ function checkoutput(flag) {
                     fill_count++;
                 }
             }
-            if (fill_count == (cells - 1)) {
+            if (fill_count == cells) {
                 finalcheck++;
             }
         }
         if (finalcheck == TopicQuantity) {
             document.getElementById("fill_alart").style.display = "none";
             document.getElementById("MeiserForm").submit();
+            document.getElementById("loader-container").style.display = "block";
+            document.getElementById("actualpage").style.display = "none";
         }
     }
 }

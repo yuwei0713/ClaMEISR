@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
-use App\Http\Middleware\LandRSchool;
-use App\Http\Middleware\TeacherData;
+use App\Models\LandRSchool;
+use App\Models\TeacherData;
 
 class RegisterController extends Controller
 {
