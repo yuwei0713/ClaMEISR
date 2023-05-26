@@ -120,9 +120,11 @@ class QuestionnaireController extends Controller
             $success = (new QuestionnaireUnify)->receive($request, $StudentID, $TeacherAccount, $FillTime); //儲存資料
             if ($success) { //儲存成功後計算結果
                 $ChildData = (new ChildInformationTable)->PushChildBasicData($StudentID);
+                $QuestionName = (new QuestionTable)->GetQuestionnaire($QuestionCode);//獲取問卷名稱
+                $FillDate = (new QuestionTable)->GetFillDate($StudentID, $QuestionCode, $CurrentYear, $Semester,$FillTime);//獲取填寫時間
                 $data = (new QuestionTable)->GetQuestionnaireAns($StudentID, $QuestionCode, $FillTime, $CurrentYear, $Semester); //檢查
-                $ifsuccess = (new QuestionTable)->CountQuestionnaire($StudentID, $QuestionCode, $FillTime, $data, $CurrentYear, $Semester); //計算並輸入
-                $ifdetailsuccess = (new QuestionTable)->CountDetailGrade($StudentID, $QuestionCode, $FillTime, $data, $CurrentYear, $Semester); //計算並輸入
+                $ifsuccess = (new QuestionTable)->CountQuestionnaire($StudentID, $QuestionCode, $FillTime, $data, $CurrentYear, $Semester); //計算並輸入基本結果
+                $ifdetailsuccess = (new QuestionTable)->CountDetailGrade($StudentID, $QuestionCode, $FillTime, $data, $CurrentYear, $Semester); //計算並輸入詳細結果
                 if ($ifsuccess && $ifdetailsuccess) { //輸入成功，抓資料
                     [$GradeData, $TopicName] = (new QuestionTable)->GetGradeData($StudentID, $QuestionCode, $FillTime, $CurrentYear, $Semester);
                     $ifsuccess = (new QuestionnaireUnify)->JudgeFill(1, $QuestionCode, $StudentID, $FillTime, 0); //修改資料 into studentfillfinish
@@ -130,9 +132,9 @@ class QuestionnaireController extends Controller
                         $CheckFillTime = (new QuestionTable)->GetFillTime($StudentID, $QuestionCode, $CurrentYear, $Semester);
                         $CurrentData = $StudentID . "-" . $QuestionCode . "-" . $CurrentYear . "-" . $Semester . "-" . $FillTime; //問卷結果比較用
                         if ($CheckFillTime >= 2) { //填寫次數大於兩次 歷史紀錄比較可以查詢
-                            return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $CurrentData)->with("ifcompare", 1)->with("ifdirect", 1);
+                            return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("QuestionName",$QuestionName)->with("FillTime",$FillTime)->with("FillDate",$FillDate)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $CurrentData)->with("ifcompare", 1)->with("ifdirect", 1);
                         } else { //填寫次數小於兩次 歷史紀錄比較不能查詢
-                            return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $CurrentData)->with("ifcompare", 0)->with("ifdirect", 1);
+                            return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("QuestionName",$QuestionName)->with("FillTime",$FillTime)->with("FillDate",$FillDate)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $CurrentData)->with("ifcompare", 0)->with("ifdirect", 1);
                         }
                     } else {
                         session()->flash('errormessage', '保存失敗，請重新嘗試!');
@@ -190,15 +192,18 @@ class QuestionnaireController extends Controller
         $SchoolYear = $RequestData[2];
         $Semester = $RequestData[3];
         $FillTime = $RequestData[4];
+        $QuestionName = (new QuestionTable)->GetQuestionnaire($QuestionCode);
         $CheckFillTime = (new QuestionTable)->GetFillTime($StudentID, $QuestionCode, $SchoolYear, $Semester);
         $ChildData = (new ChildInformationTable)->PushChildBasicData($StudentID);
         [$GradeData, $TopicName] = (new QuestionTable)->GetGradeData($StudentID, $QuestionCode, $FillTime, $SchoolYear, $Semester);
+        $FillDate = (new QuestionTable)->GetFillDate($StudentID, $QuestionCode, $SchoolYear, $Semester,$FillTime);
         if ($CheckFillTime >= 2) { //填寫次數大於兩次 歷史紀錄比較可以查詢
-            return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $request->resultdata)->with("ifcompare", 1)->with("ifdirect", 0);
+            return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("QuestionName",$QuestionName)->with("FillTime",$FillTime)->with("FillDate",$FillDate)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $request->resultdata)->with("ifcompare", 1)->with("ifdirect", 0);
         } else { //填寫次數小於兩次 歷史紀錄比較不能查詢
-            return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $request->resultdata)->with("ifcompare", 0)->with("ifdirect", 0);
+            return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("QuestionName",$QuestionName)->with("FillTime",$FillTime)->with("FillDate",$FillDate)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $request->resultdata)->with("ifcompare", 0)->with("ifdirect", 0);
         }
     }
+    //詳細計算結果呈現
     public function PushDetailResult(Request $request)
     {
         $RequestData = preg_split("/-/", $request->resultdata, -1, PREG_SPLIT_NO_EMPTY);
@@ -207,10 +212,12 @@ class QuestionnaireController extends Controller
         $SchoolYear = $RequestData[2];
         $Semester = $RequestData[3];
         $FillTime = $RequestData[4];
+        $QuestionName = (new QuestionTable)->GetQuestionnaire($QuestionCode);
         $ChildData = (new ChildInformationTable)->PushChildBasicData($StudentID);
         [$DetailData, $TopicName] = (new QuestionTable)->GetGradeDetailData($StudentID, $QuestionCode, $FillTime, $SchoolYear, $Semester);
+        $FillDate = (new QuestionTable)->GetFillDate($StudentID, $QuestionCode, $SchoolYear, $Semester,$FillTime);
         //dd($DetailData);
-        return view('DetailResult')->with("title", "Result")->with("DetailData", $DetailData)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData);
+        return view('DetailResult')->with("title", "Result")->with("QuestionName",$QuestionName)->with("FillTime",$FillTime)->with("FillDate",$FillDate)->with("DetailData", $DetailData)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData);
     }
     //歷史紀錄計算結果比較
     public function CompareResult(Request $request)

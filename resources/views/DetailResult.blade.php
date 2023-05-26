@@ -22,6 +22,35 @@
     </script>
     @endif
     @include('layouts.header')
+     <!--學生資訊-->
+     <div class="BasicInformation">
+        <!--問卷名稱，班級，座號，姓名，填寫次數，填寫日期-->
+        <div>
+            <span>問卷名稱：</span>
+            <span>{{ $QuestionName}}</span>
+        </div>
+        <div>
+            <span>班級：</span>
+            <span>{{ $ChildBasic->ClassName}}</span>
+        </div>
+        <div>
+            <span>座號：</span>
+            <span>{{ $ChildBasic->StudentCode}}</span>
+        </div>
+        <div>
+            <span>姓名：</span>
+            <span>{{ $ChildBasic->StudentName}}</span>
+        </div>
+        <div>
+            <span>填寫次數：</span>
+            <span>{{ $FillTime}}</span>
+        </div>
+        <div>
+            <span>填寫日期：</span>
+            <span>{{ $FillDate}}</span>
+        </div>
+    </div>
+    <!--學生資訊end-->
     <!--視覺化圖形-->
     <div class="main-container">
             <div class="chart-container">

@@ -399,7 +399,9 @@ progress[value]::-webkit-progress-value {
     .store-framework {
         width: 44%;
     }
-
+    progress{
+        margin-left: 0;
+    }
 }
 
 @media screen and (max-width:768px) {

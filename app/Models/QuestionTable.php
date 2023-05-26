@@ -180,10 +180,17 @@ class QuestionTable
          * FillDate 自動獲取當天日期
          */
     }
-    public function GetQuestionnaire()
+    public function GetQuestionnaire($QuestionCode = null)
     {
-        $Questionnaire = DB::table("questionnaireframework")->select("QuestionName", "QuestionCode")->get()->toArray(); //抓問卷名稱和代號
-        return $Questionnaire;
+        if($QuestionCode == null){
+            $Questionnaire = DB::table("questionnaireframework")->select("QuestionName", "QuestionCode")->get()->toArray(); //抓問卷名稱和代號
+            return $Questionnaire;
+        }else{
+            $Questionnaire = DB::table("questionnaireframework")->select("QuestionName")->where("QuestionCode",$QuestionCode)->get()->toArray(); //抓問卷名稱和代號
+            $QuestionName = $Questionnaire[0]->QuestionName;
+            return $QuestionName;
+        }
+        
     }
     public function GetFillStatus($SchoolCode, $BasicData, $QuestionData, $CurrentYear, $Semester)
     { //獲取填寫次數以及當前填寫狀態，首頁使用
@@ -275,6 +282,18 @@ class QuestionTable
             $FillTime = (int)$FillTime;
         }
         return $FillTime;
+    }
+    public function GetFillDate($StudentID, $QuestionCode, $SchoolYear, $Semester, $FillTime){
+        $FillDate = DB::table('questionstoretable')->select('FillDate')
+        ->where('StudentID', $StudentID)
+        ->where('QuestionCode', $QuestionCode)
+        ->where('SchoolYear', $SchoolYear)
+        ->where('Semester', $Semester)
+        ->where('FillTime', $FillTime)
+        ->Limit(1)
+        ->get()->toArray();
+        $FillDate = $FillDate[0]->FillDate;
+        return $FillDate;
     }
     public function UpdateFillStatus($QuestionCode, $StudentID, $FillTime, $FillStatus, $CurrentYear, $Semester)
     {
