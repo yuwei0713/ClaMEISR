@@ -31,7 +31,7 @@ class ChildInformationTable
     {
         $ChildDBSelecter = DB::table('studentschooltable')->where('TeacherAccount', $account)->where('SchoolCode', $schoolnumber);
         $TeacherDBSelecter = DB::table('studentschooltable')
-            ->where('TeacherAccount', $account) //目前是使用教師名稱，可能會有同名同姓問題發生，暫時不改
+            ->where('TeacherAccount', $account) //使用教師帳號
             ->where('SchoolCode', $schoolnumber)
             ->where('year', '>=', $CurrentYear - 2)
             ->where('year', '<=', $CurrentYear)

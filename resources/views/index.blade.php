@@ -588,7 +588,7 @@
                         <div class="text_style" onclick="historyteacher()">教師基本資料</div>
                     </li>
                     <li class="text_rows">
-                            <a class="text_style downloadfile" href="../file/ClaMEISR-menual.pdf" download="教學手冊.pdf">教學手冊下載(PDF檔)</a>
+                            <a class="text_style downloadfile" href="../file/ClaMEISR-manual.pdf" download="教學手冊.pdf">教學手冊下載(PDF檔)</a>
                     </li>
                 </ul>
             </div>
