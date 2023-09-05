@@ -73,30 +73,6 @@
         </label>
     </div>
 </div>
-<!--第二項end-->
-<!--第三項 9 -->
-<!--<div class="std_information_framwork manual_option" id="sq11">
-    <div class="option_title">障礙程度</div>
-    <div class="diagnosis">
-        <label class="diagnosis_framwork diagnosis_framework_four">
-            <input class="option_square" type="radio" name="degree" value="輕度">
-            <span class="choice-css">輕度</span>
-        </label>
-        <label class="diagnosis_framwork diagnosis_framework_four">
-            <input class="option_square" type="radio" name="degree" value="中度">
-            <span class="choice-css">中度</span>
-        </label>
-        <label class="diagnosis_framwork diagnosis_framework_four">
-            <input class="option_square" type="radio" name="degree" value="中重度">
-            <span class="choice-css">中重度</span>
-        </label>
-        <label class="diagnosis_framwork diagnosis_framework_four">
-            <input class="option_square" type="radio" name="degree" value="重度">
-            <span class="choice-css">重度</span>
-        </label>
-    </div>
-</div>-->
-<!--第三項end -->
 
 <!--第四項 9 -->
 <div class="std_information_framwork diagnosis_option" id="sq7">

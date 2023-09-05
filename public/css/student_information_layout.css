@@ -29,6 +29,9 @@ body{
     margin-right: 0px;
     float: right;
 }
+.title-framework{
+    position: relative;
+}
 .theme-css{
     color: rgb(89, 87, 87);
     font-weight: 400;
@@ -43,6 +46,13 @@ body{
     display: flex;
     margin-top: 20px;
     margin-bottom: 40px;
+}
+.delete-framework{
+    position: absolute;
+    right: 1rem;
+    top: 0;
+    font-size: 22px;
+    color: rgb(252, 114, 114);
 }
 .std_information_framwork{
     padding-left: 10px;

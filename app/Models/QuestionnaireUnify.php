@@ -180,6 +180,7 @@ class QuestionnaireUnify
             $PersonalBasicData = (new QuestionTable)->GetResultBasicData($StudentID);
             $ReturnData = array_merge($ReturnData,$PersonalBasicData);
         }
+        // dd($ReturnData);
         return $ReturnData;
     }
     public function IntegrateHistoryData($request){

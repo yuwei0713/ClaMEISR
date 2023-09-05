@@ -1,0 +1,461 @@
+body {
+    z-index: 1;
+    background-color: rgb(243, 243, 243);
+}
+.main-framwork {
+    max-width: 1000px;
+    margin: 40px auto 70px;
+    position: relative;
+    background: white;
+    box-shadow: rgb(69 69 69 / 40%) 0px 0px 12px 0px;
+}
+.question-framwork {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    padding: 0 30px 20px;
+    background-color: transparent;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.inner-framwork {
+    position: relative;
+    width: 100%;
+    margin-right: 0px;
+    float: right;
+}
+
+.theme-framework {
+    display: flex;
+}
+
+.theme-css {
+    color: rgb(0, 0, 0);
+    font-weight: 800;
+    font-size: 26px;
+    line-height: 28px;
+    min-height: 0.01px;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    margin: 40px 0;
+}
+
+.theme-right {
+    margin-top: 5px;
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.theme-flex {
+    display: flex;
+}
+
+.rTable {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.rTableRow {
+    display: table-row;
+}
+
+.rTableCell,
+.rTableHead {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.tablehead .rTableCell {
+    font-size: 18px;
+    padding-bottom: 10px;
+    font-weight: 700;
+}
+
+.option-table .rTableCell {
+    text-align: center;
+}
+
+.topic-rows:nth-of-type(2n) {
+    background: #F5F5F5;
+}
+
+.not-yet {
+    border-top: solid 4px rgb(0, 0, 0) !important;
+}
+
+.topic-css {
+    width: 465px;
+    margin-right: 20px;
+    font-size: 22px;
+    text-align: left;
+}
+
+.option-css {
+    box-sizing: none;
+    padding: 0 8px;
+    width: 40px;
+}
+
+label {
+    margin-bottom: 0 !important;
+}
+
+.option-css-inner {
+    width: 100%;
+    height: 100%;
+}
+
+.option-size {
+    width: 36px;
+    margin: 0 auto;
+}
+
+.option-size-adjust {
+    text-align: center;
+    padding: 4px;
+}
+
+.option-size-inner {
+    box-sizing: border-box;
+    position: relative;
+    width: 1em;
+    height: 1em;
+    margin: 0 auto;
+}
+
+
+input[type='radio']:after {
+    width: 19px;
+    height: 19px;
+    border-radius: 19px;
+    top: -6px;
+    left: -3px;
+    position: relative;
+    background-color: white;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid rgb(220, 221, 221);
+}
+
+input[type='radio']:checked:after {
+    width: 19px;
+    height: 19px;
+    border-radius: 19px;
+    top: -6px;
+    left: -3px;
+    position: relative;
+    background-color: #007CE9;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+}
+
+.replenish-framwork {
+    position: relative;
+    width: 100%;
+    border: 2px dashed rgb(185, 185, 185);
+    margin-bottom: 20px;
+}
+
+.replenish-framwork ol {
+    margin: 16px 0;
+}
+
+.replenish-framwork ol li {
+    list-style-type: none;
+    padding-bottom: 5px;
+}
+
+.replenish-framwork span {
+    position: relative;
+    left: -20px;
+    font-size: 18px;
+}
+
+.questiongrade-framework {
+    margin: 2rem 0;
+}
+
+.questiongrade-title {
+    font-size: 24px;
+    margin-bottom: 0.5rem;
+}
+
+.questiongrade-framework .rTableRow {
+    height: 3rem;
+}
+
+.questiongrade-framework .rTableRow .rTableCell {
+    font-size: 18px;
+    padding-left: 0.6rem;
+    border: 1px solid black;
+}
+
+.send-framwork {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px auto 30px;
+}
+
+.pre-page {
+    margin-right: auto;
+    width: 200px;
+}
+
+.next-page {
+    margin-left: auto;
+    width: 250px;
+}
+
+.pre-button {
+    display: inline-block;
+    line-height: 1.5;
+    border-radius: 4px;
+    border: 0px;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    padding: 8px 12px;
+    background-color: #e7a05e;
+}
+
+.pre-button:hover {
+    transition-duration: 600ms;
+    background-color: #c48d59;
+    color: white;
+}
+
+.pre-button:active {
+    border: 2px dotted red;
+}
+
+.store-framework {
+    display: flex;
+    margin: 0 auto;
+    width: 40%;
+    margin-top: 2rem;
+
+}
+
+.store-framework .next-button {
+    margin-bottom: 0px !important;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.next-button {
+    display: inline-block;
+    line-height: 1.5;
+    border-radius: 4px;
+    border: 0px;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    padding: 8px 12px;
+    margin-bottom: 20px;
+    background-color: #e7a05e;
+}
+
+.next-button:hover {
+    transition-duration: 600ms;
+    background-color: #c48d59;
+    color: white;
+}
+
+.next-button:active {
+    border: 2px dotted red;
+}
+
+.fill-alart {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    color: red;
+}
+
+/*進度條*/
+progress {
+    border-radius: 9px;
+    height: 1.3rem;
+    width: 50%;
+    margin-left: -11.5%;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.progress-text {
+    font-size: 1.3rem;
+    margin-left: 1rem;
+}
+
+progress::-webkit-progress-bar {
+    border-radius: 9px;
+    background-color: white;
+}
+
+progress::-webkit-progress-value {
+    border-radius: 9px;
+    background-color: #f3c623;
+
+}
+
+progress[value]::-webkit-progress-value {
+    transition: width 0.6s;
+    background: #f3c623;
+}
+
+.css-13z4rfv {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 60px;
+    font-size: 12px;
+    background-color: rgb(255, 255, 255);
+    padding: 10px 15px;
+    box-shadow: rgb(198, 209, 230) 0px -1px 2px 0px;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+.css-1kvwmfc {
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    margin: 0px auto;
+    padding: 0px;
+    height: 100%;
+}
+
+/*RWD*/
+@media screen and (max-width:1200px) {
+    .store-framework {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width:1024px) {
+    table {
+        width: 100%;
+    }
+
+    .represent-css {
+        display: none !important;
+    }
+
+    .option-table th {
+        font-size: 25px;
+        text-align: center;
+    }
+
+    .option-css {
+        width: 70px;
+    }
+}
+
+@media screen and (max-width:992px) {
+    .store-framework {
+        width: 44%;
+    }
+
+    progress {
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    .option-css {
+        box-sizing: content-box !important;
+    }
+
+    .topic-css {
+        width: 100%;
+        margin-right: 0;
+        font-size: 20px;
+        text-align: left;
+    }
+
+    .store-framework {
+        flex-direction: column;
+        margin-top: 30px;
+        width: 50%;
+    }
+
+    .store-framework .next-button {
+        margin: 0.5rem auto;
+    }
+
+    .tablehead {
+        display: none !important;
+    }
+
+    .rTableRow {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .option-css:before {
+        content: attr(data-th);
+    }
+
+    .option-css {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .old-css {
+        display: flex;
+        flex-direction: row !important;
+    }
+
+    .topic-rows:nth-of-type(2n) {
+        background: none;
+    }
+
+    .rwd-option-framework {
+        margin: 5px;
+        border: 1px dotted;
+        height: 36px;
+    }
+
+    .rwd-option-framework:nth-of-type(2n) {
+        background: #F5F5F5;
+    }
+
+    .topic-rows {
+        margin-top: 10px;
+        margin-bottom: 35px;
+    }
+    .questiongrade-framework .rTableRow{
+        height: 3.5rem;
+    }
+}
+
+@media screen and (max-width:576px) {
+    .store-framework {
+        width: 22%;
+    }
+
+    .replenish-framwork {
+        display: none;
+    }
+
+    table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+    }
+}

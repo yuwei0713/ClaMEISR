@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Notifications\Action;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -231,13 +232,17 @@ class ChildInformationTable
             $other_living = $request['living_other_content'];
         }
 
-        if ($request['fst_attend_other']) {
-            $fst_attend = $request['fst_attend'] . "-" . $request['fst_attend_other']; // 主要照顧者 選項或是其他 合併
+        if ($request['fst_attend'] == "other") {
+            if ($request['fst_attend_other']) {
+                $fst_attend = $request['fst_attend'] . "-" . $request['fst_attend_other']; // 主要照顧者 選項或是其他 合併
+            }
         } else {
             $fst_attend = $request['fst_attend'];
         }
-        if ($request['sec_attend_other']) {
-            $sec_attend = $request['sec_attend'] . "-" . $request['sec_attend_other']; // 次要照顧者 選項或是其他 合併
+        if ($request['sec_attend'] == "other") {
+            if ($request['sec_attend_other']) {
+                $sec_attend = $request['sec_attend'] . "-" . $request['sec_attend_other']; // 次要照顧者 選項或是其他 合併
+            }
         } else {
             $sec_attend = $request['sec_attend'];
         }
@@ -264,11 +269,11 @@ class ChildInformationTable
             $diagnosis = $request['diagnosis']; //障礙類別
             if ($request['diagnosis_other_content']) { //其他症狀描述
                 $diagnosis = "other";
-                if($request['status'] == "confirm"){
+                if ($request['status'] == "confirm") {
                     $other_diagnosis = $request['diagnosis_other_content']; // 診斷 選項或是其他 合併
                 }
-                if($request['status'] == "suspected"){
-                    $other_diagnosis = $request['suspected_diagnosis_other_content']; 
+                if ($request['status'] == "suspected") {
+                    $other_diagnosis = $request['suspected_diagnosis_other_content'];
                 }
             }
             $degree = $request['degree']; //障礙程度
@@ -302,6 +307,7 @@ class ChildInformationTable
     }
     public function UpdataChildInformation($request, $TeacherAccount) //修改幼兒基本資料
     {
+
         //宣告基本變數
         $other_living = "";
         $living = "";
@@ -385,13 +391,17 @@ class ChildInformationTable
             $other_living = $request['living_other_content'];
         }
 
-        if ($request['fst_attend_other']) {
-            $fst_attend = $request['fst_attend'] . "-" . $request['fst_attend_other']; // 主要照顧者 選項或是其他 合併
+        if ($request['fst_attend'] == "other") {
+            if ($request['fst_attend_other']) {
+                $fst_attend = $request['fst_attend'] . "-" . $request['fst_attend_other']; // 主要照顧者 選項或是其他 合併
+            }
         } else {
             $fst_attend = $request['fst_attend'];
         }
-        if ($request['sec_attend_other']) {
-            $sec_attend = $request['sec_attend'] . "-" . $request['sec_attend_other']; // 次要照顧者 選項或是其他 合併
+        if ($request['sec_attend'] == "other") {
+            if ($request['sec_attend_other']) {
+                $sec_attend = $request['sec_attend'] . "-" . $request['sec_attend_other']; // 次要照顧者 選項或是其他 合併
+            }
         } else {
             $sec_attend = $request['sec_attend'];
         }
@@ -410,20 +420,20 @@ class ChildInformationTable
             }
 
             $diagnosis = $request['diagnosis']; //障礙類別
-            if($request['status'] == "confirm"){
+            if ($request['status'] == "confirm") {
                 if ($request['diagnosis_other_content']) { //其他症狀描述
                     $diagnosis = "other";
                     $other_diagnosis = $request['diagnosis_other_content']; // 診斷 選項或是其他 合併
                 }
             }
-            if($request['status'] == "suspected"){
-                if ($request['suspected_diagnosis_other_content']) { //其他症狀描述
+            if ($request['status'] == "suspected") {
+                if ($request['diagnosis_other_content']) { //其他症狀描述
                     $diagnosis = "other";
-                    $other_diagnosis = $request['suspected_diagnosis_other_content']; // 診斷 選項或是其他 合併
+                    $other_diagnosis = $request['diagnosis_other_content']; // 診斷 選項或是其他 合併
                 }
             }
             $degree = $request['degree']; //障礙程度
-            
+
             if ($diagnosis == "發展遲緩") {
                 for ($i = 0; $i < count($request['identities']); $i++) {
                     $identities .= $request['identities'][$i] . " "; //鑑定安置類別 array
@@ -464,5 +474,208 @@ class ChildInformationTable
         }
 
         return true;
+    }
+    public function GetDeleteOrder($StudentID) //獲取刪除順序
+    {
+        $Order = 0;
+        do {
+            $Order += 1;
+            $DeleteID = DB::table('deletestudentschooltable')
+                ->select('StudentID')
+                ->where('StudentID', $StudentID)
+                ->where('DelOrder', $Order)
+                ->get()->toArray();
+        } while (count($DeleteID) != 0);
+
+        return $Order;
+    }
+    public function CheckIDExist($StudentID) //檢查ID是否衝突
+    {
+        $ExistID = DB::table('studentschooltable')
+            ->select('StudentID')
+            ->where('StudentID', $StudentID)
+            ->get()->toArray();
+        if (count($ExistID) == 0) { //ID無衝突，資料可復原
+            return true;
+        } else { //有學生資料衝突(學校，入學年，班級，座號)，無法復原
+            return false;
+        }
+    }
+    public function TransferData($StudentID, $Order, $Action) //轉移資料
+    {
+        //兩個功能，刪除資料，還原資料
+        if ($Action == "Remove") {
+            $DelDate = (new GetDate)->GetToday();
+            try {
+                /** 
+                 * Insert deletestudentschooltable from studentschooltable
+                 * Insert deletestudentstatustable from studentstatustable
+                 * Insert deletestudentfillfinish from studentfillfinish
+                 * Insert deletequestionstoretable from questionstoretable
+                 * Insert deletequestionbasicgrade from questionbasicgrade
+                 * Insert deletequestiondetailgrade from questiondetailgrade
+                 */
+
+                //deletestudentschooltable
+                $studentschooldata = DB::table('studentschooltable')->where('StudentID', $StudentID)->get()->toArray();
+                $studentschooldata = reset($studentschooldata);
+                DB::table('deletestudentschooltable')->insert([
+                    'StudentID' => $studentschooldata->StudentID,
+                    'StudentName' => $studentschooldata->StudentName,
+                    'StudentCode' => $studentschooldata->StudentCode,
+                    'Gender' => $studentschooldata->Gender,
+                    'Year' => $studentschooldata->Year,
+                    'Semester' => $studentschooldata->Semester,
+                    'SchoolName' => $studentschooldata->SchoolName,
+                    'SchoolCode' => $studentschooldata->SchoolCode,
+                    'ClassName' => $studentschooldata->ClassName,
+                    'ClassCode' => $studentschooldata->ClassCode,
+                    'TeacherAccount' => $studentschooldata->TeacherAccount,
+                    'BirthDay' => $studentschooldata->BirthDay,
+                    'Age' => $studentschooldata->Age,
+                    'DelOrder' => $Order,
+                    'DelDate' => $DelDate
+                ]);
+
+                //deletestudentstatustable
+                $studentstatusdata = DB::table('studentstatustable')->where('StudentID', $StudentID)->get()->toArray();
+                $studentstatusdata = reset($studentstatusdata);
+                DB::table('deletestudentstatustable')->insert([
+                    'StudentID' => $studentstatusdata->StudentID,
+                    'Status' => $studentstatusdata->Status,
+                    'Identities' => $studentstatusdata->Identities,
+                    'Proofs' => $studentstatusdata->Proofs,
+                    'Manual' => $studentstatusdata->Manual,
+                    'Diagnosis' => $studentstatusdata->Diagnosis,
+                    'OtherDiagnosis' => $studentstatusdata->OtherDiagnosis,
+                    'Note' => $studentstatusdata->Note,
+                    'Degree' => $studentstatusdata->Degree,
+                    'Placement' => $studentstatusdata->Placement,
+                    'Resident' => $studentstatusdata->Resident,
+                    'OtherResident' => $studentstatusdata->OtherResident,
+                    'Fst-attend' => $studentstatusdata->{'Fst-attend'},
+                    'Sec-attend' => $studentstatusdata->{'Sec-attend'},
+                    'DelOrder' => $Order
+                ]);
+
+                //deletestudentfillfinish
+                $studentfilldata = DB::table('studentfillfinish')->where('StudentID', $StudentID)->get()->toArray();
+                for ($fillcount = 0; $fillcount < count($studentfilldata); $fillcount++) {
+                    DB::table('deletestudentfillfinish')->insert([
+                        'StudentID' => $studentfilldata[$fillcount]->StudentID,
+                        'QuestionCode' => $studentfilldata[$fillcount]->QuestionCode,
+                        'SchoolYear' => $studentfilldata[$fillcount]->SchoolYear,
+                        'Semester' => $studentfilldata[$fillcount]->Semester,
+                        'FillTime' => $studentfilldata[$fillcount]->FillTime,
+                        'Finish' => $studentfilldata[$fillcount]->Finish,
+                        'DelOrder' => $Order
+                    ]);
+                }
+                //deletequestionstoretable
+                $questionstoredata = DB::table('questionstoretable')->where('StudentID', $StudentID)->get()->toArray();
+                for ($questionstorecount = 0; $questionstorecount < count($questionstoredata); $questionstorecount++) {
+                    DB::table('deletequestionstoretable')->insert([
+                        'StudentID' => $questionstoredata[$questionstorecount]->StudentID,
+                        'QuestionCode' => $questionstoredata[$questionstorecount]->QuestionCode,
+                        'TeacherAccount' => $questionstoredata[$questionstorecount]->TeacherAccount,
+                        'SchoolYear' => $questionstoredata[$questionstorecount]->SchoolYear,
+                        'Semester' => $questionstoredata[$questionstorecount]->Semester,
+                        'BigTopicNumber' => $questionstoredata[$questionstorecount]->BigTopicNumber,
+                        'Value' => $questionstoredata[$questionstorecount]->Value,
+                        'FillTime' => $questionstoredata[$questionstorecount]->FillTime,
+                        'FillDate' => $questionstoredata[$questionstorecount]->FillDate,
+                        'DelOrder' => $Order
+                    ]);
+                }
+                //deletequestionbasicgrade
+                $questionbasicgradedata = DB::table('questionbasicgrade')->where('StudentID', $StudentID)->get()->toArray();
+                for ($basicgradecount = 0; $basicgradecount < count($questionbasicgradedata); $basicgradecount++) {
+                    DB::table('deletequestionbasicgrade')->insert([
+                        'StudentID' => $questionbasicgradedata[$basicgradecount]->StudentID,
+                        'QuestionCode' => $questionbasicgradedata[$basicgradecount]->QuestionCode,
+                        'SchoolYear' => $questionbasicgradedata[$basicgradecount]->SchoolYear,
+                        'Semester' => $questionbasicgradedata[$basicgradecount]->Semester,
+                        'BigTopicNumber' => $questionbasicgradedata[$basicgradecount]->BigTopicNumber,
+                        'ThreePoint' => $questionbasicgradedata[$basicgradecount]->ThreePoint,
+                        'FillByAge' => $questionbasicgradedata[$basicgradecount]->FillByAge,
+                        'AgeProficientPercent' => $questionbasicgradedata[$basicgradecount]->AgeProficientPercent,
+                        'FillByAll' => $questionbasicgradedata[$basicgradecount]->FillByAll,
+                        'AllProficientPercent' => $questionbasicgradedata[$basicgradecount]->AllProficientPercent,
+                        'FillTime' => $questionbasicgradedata[$basicgradecount]->FillTime,
+                        'DelOrder' => $Order
+                    ]);
+                }
+                //deletequestiondetailgrade
+                $questiondetailgradedata = DB::table('questiondetailgrade')->where('StudentID', $StudentID)->get()->toArray();
+                for ($detailgradecount = 0; $detailgradecount < count($questiondetailgradedata); $detailgradecount++) {
+                    DB::table('deletequestiondetailgrade')->insert([
+                        'StudentID' => $questiondetailgradedata[$detailgradecount]->StudentID,
+                        'QuestionCode' => $questiondetailgradedata[$detailgradecount]->QuestionCode,
+                        'SchoolYear' => $questiondetailgradedata[$detailgradecount]->SchoolYear,
+                        'Semester' => $questiondetailgradedata[$detailgradecount]->Semester,
+                        'BigTopicNumber' => $questiondetailgradedata[$detailgradecount]->BigTopicNumber,
+                        'Category' => $questiondetailgradedata[$detailgradecount]->Category,
+                        'DetailName' => $questiondetailgradedata[$detailgradecount]->DetailName,
+                        'ThreePoint' => $questiondetailgradedata[$detailgradecount]->ThreePoint,
+                        'FillByAge' => $questiondetailgradedata[$detailgradecount]->FillByAge,
+                        'AgeProficientPercent' => $questiondetailgradedata[$detailgradecount]->AgeProficientPercent,
+                        'FillByAll' => $questiondetailgradedata[$detailgradecount]->FillByAll,
+                        'AllProficientPercent' => $questiondetailgradedata[$detailgradecount]->AllProficientPercent,
+                        'FillTime' => $questiondetailgradedata[$detailgradecount]->FillTime,
+                        'DelOrder' => $Order
+                    ]);
+                }
+                return true;
+            } catch (\Illuminate\Database\QueryException $e) {
+                dd($e);
+                //return false;
+
+            }
+        }
+        if ($Action == "Recover") {
+            try {
+                return true;
+            } catch (\Illuminate\Database\QueryException $e) {
+                return false;
+            }
+        }
+    }
+    public function DeleteData($StudentID, $Order, $Action) //轉移後刪除資料
+    {
+        //兩個功能，刪除資料，還原資料
+        if ($Action == "Remove") {
+            /** 
+             * Delete studentschooltable (StudentID)
+             * Delete studentstatustable (StudentID)
+             * Delete studentfillfinish (StudentID)
+             * Delete questionstoretable (StudentID)
+             * Delete questionbasicgrade (StudentID)
+             * Delete questiondetailgrade (StudentID)
+             */
+            try {
+                DB::table('studentschooltable')->where('StudentID', $StudentID)->delete();
+                DB::table('studentstatustable')->where('StudentID', $StudentID)->delete();
+                DB::table('studentfillfinish')->where('StudentID', $StudentID)->delete();
+                DB::table('questionstoretable')->where('StudentID', $StudentID)->delete();
+                DB::table('questionbasicgrade')->where('StudentID', $StudentID)->delete();
+                DB::table('questiondetailgrade')->where('StudentID', $StudentID)->delete();
+                return true;
+            } catch (\Illuminate\Database\QueryException $e) {
+                return false;
+            }
+        }
+        if ($Action == "Recover") {
+            try {
+                DB::table('deletestudentschooltable')->where('StudentID', $StudentID)->where('DelOrder', $Order)->delete();
+                DB::table('deletestudentstatustable')->where('StudentID', $StudentID)->where('DelOrder', $Order)->delete();
+                DB::table('deletestudentfillfinish')->where('StudentID', $StudentID)->where('DelOrder', $Order)->delete();
+                DB::table('deletequestionstoretable')->where('StudentID', $StudentID)->where('DelOrder', $Order)->delete();
+                DB::table('deletequestionbasicgrade')->where('StudentID', $StudentID)->where('DelOrder', $Order)->delete();
+                DB::table('deletequestiondetailgrade')->where('StudentID', $StudentID)->where('DelOrder', $Order)->delete();
+                return true;
+            } catch (\Illuminate\Database\QueryException $e) {
+                return false;
+            }
+        }
     }
 }

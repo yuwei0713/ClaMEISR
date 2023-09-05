@@ -21,7 +21,7 @@
         <!--問答-->
         <div class="question-framwork">
             <div class="inner-framwork">
-                <div>
+                <div class="title-framework">
                     <h5 class="theme-css">
                         <div class="theme-flex">
                             <div>
@@ -29,6 +29,15 @@
                             </div>
                         </div>
                     </h5>
+                    <div class="delete-framework" onclick="delete_check()">
+                        <form action="{{ route('child.information.delete') }}" method="POST" id="DIForm">
+                            @csrf
+                            <input type="hidden" name="StudentID" value="{{ $ChildFullData['StudentID'] }}">
+                            <span>
+                                刪除
+                            </span>
+                        </form>
+                    </div>
                     <div class="form_detail"></div>
                 </div>
                 @include('layouts.childhistorydata.Basic')

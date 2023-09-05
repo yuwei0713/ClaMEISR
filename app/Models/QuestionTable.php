@@ -182,15 +182,14 @@ class QuestionTable
     }
     public function GetQuestionnaire($QuestionCode = null)
     {
-        if($QuestionCode == null){
+        if ($QuestionCode == null) {
             $Questionnaire = DB::table("questionnaireframework")->select("QuestionName", "QuestionCode")->get()->toArray(); //抓問卷名稱和代號
             return $Questionnaire;
-        }else{
-            $Questionnaire = DB::table("questionnaireframework")->select("QuestionName")->where("QuestionCode",$QuestionCode)->get()->toArray(); //抓問卷名稱和代號
+        } else {
+            $Questionnaire = DB::table("questionnaireframework")->select("QuestionName")->where("QuestionCode", $QuestionCode)->get()->toArray(); //抓問卷名稱和代號
             $QuestionName = $Questionnaire[0]->QuestionName;
             return $QuestionName;
         }
-        
     }
     public function GetFillStatus($SchoolCode, $BasicData, $QuestionData, $CurrentYear, $Semester)
     { //獲取填寫次數以及當前填寫狀態，首頁使用
@@ -283,15 +282,16 @@ class QuestionTable
         }
         return $FillTime;
     }
-    public function GetFillDate($StudentID, $QuestionCode, $SchoolYear, $Semester, $FillTime){
+    public function GetFillDate($StudentID, $QuestionCode, $SchoolYear, $Semester, $FillTime)
+    {
         $FillDate = DB::table('questionstoretable')->select('FillDate')
-        ->where('StudentID', $StudentID)
-        ->where('QuestionCode', $QuestionCode)
-        ->where('SchoolYear', $SchoolYear)
-        ->where('Semester', $Semester)
-        ->where('FillTime', $FillTime)
-        ->Limit(1)
-        ->get()->toArray();
+            ->where('StudentID', $StudentID)
+            ->where('QuestionCode', $QuestionCode)
+            ->where('SchoolYear', $SchoolYear)
+            ->where('Semester', $Semester)
+            ->where('FillTime', $FillTime)
+            ->Limit(1)
+            ->get()->toArray();
         $FillDate = $FillDate[0]->FillDate;
         return $FillDate;
     }
@@ -1649,7 +1649,7 @@ class QuestionTable
     public function GetResultBasicData($StudentID)
     {
         /**
-         * 入學年度 學期 班級 座號 姓名 問卷名稱 填寫次數 問卷結果
+         * 入學年度 學期 班級 座號 姓名 問卷名稱 填寫次數 問卷結果 填寫日期
          * studentschooltable
          * 入學年度 Year
          * 學期     Semester
@@ -1676,25 +1676,58 @@ class QuestionTable
         $BasicData = json_decode(json_encode(reset($BasicData)), true); //指標轉陣列
 
         //studentfillfinish 會有多筆
-        $FillData = DB::table('studentfillfinish')
+        //刪除重複項，問卷Code 只會有一筆(多個問卷Code)
+        $FillBasicData = DB::table('studentfillfinish')
+            ->select('StudentID', 'QuestionCode')
             ->where('StudentID', $StudentID)
-            ->get()->toArray();
-        for ($i = 0; $i < count($FillData); $i++) {
-            $NewFillData = json_decode(json_encode($FillData[$i]), true); //指標轉陣列
-            $NewFillData +=  ["CurrentSemester" => $NewFillData["Semester"]];
+            ->distinct()->get()->toArray();
 
-            $CurrentQuestionCode = $NewFillData["QuestionCode"];
-            $CombineData = $BasicData + $NewFillData; //合併陣列 相同鍵值，第一個陣列的值為優先
+        for ($i = 0; $i < count($FillBasicData); $i++) {
+            $CombineData = $BasicData;
+            $FillData = DB::table('studentfillfinish')
+                ->select('SchoolYear', 'Semester', 'FillTime', 'Finish')
+                ->where('QuestionCode', $FillBasicData[$i]->QuestionCode)
+                ->where('StudentID', $StudentID)
+                ->get()->toArray();
+            // dd($FillData);
+            $NewFillBasicData = json_decode(json_encode($FillBasicData[$i]), true); //指標轉陣列
+            $CombineData += $NewFillBasicData;
 
-
+            $CurrentQuestionCode = $NewFillBasicData["QuestionCode"];
+            //獲取問卷名稱
             $QuestionName = DB::table('questionnaireframework')->select("QuestionName")
                 ->where('QuestionCode', $CurrentQuestionCode)
                 ->first(); //只獲取一筆資料(第一筆)
             $QuestionName = json_decode(json_encode($QuestionName), true);
 
-            $FullData = $CombineData + $QuestionName;
+            $CombineData += $QuestionName;
+            // dd($BasicData);
+            $FillContent = array();
+            for ($j = 0; $j < count($FillData); $j++) {
+                $NewFillData = json_decode(json_encode($FillData[$j]), true); //指標轉陣列
+                $Date = array();
+                // Finish = 1 or FillTime > 1，代表至少填寫完成一次以上
+                if (($NewFillData["Finish"] == 1) || ($NewFillData["FillTime"] > 1)) {
+                    for ($FillTime = 1; $FillTime <= $NewFillData["FillTime"]; $FillTime++) {
+                        $FillDate = DB::table('questionstoretable')
+                            ->select("FillDate")
+                            ->where('StudentID', $StudentID)
+                            ->where('QuestionCode', $CurrentQuestionCode)
+                            ->where('SchoolYear', $NewFillData["SchoolYear"])
+                            ->where('Semester', $NewFillData["Semester"])
+                            ->where('FillTime', $FillTime)
+                            ->first();
+                        array_push($Date, $FillDate->FillDate);
+                    }
+                    $NewFillData +=  ["FillDate" => $Date];
 
-            array_push($FinalData, $FullData);
+                    array_push($FillContent, $NewFillData);
+                }
+            }
+            if (!empty($FillContent)) {
+                $CombineData += ["FillContent" => $FillContent];
+                array_push($FinalData, $CombineData);
+            }
         }
         return $FinalData;
     }

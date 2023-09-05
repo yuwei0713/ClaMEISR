@@ -87,7 +87,8 @@ class QuestionnaireController extends Controller
             }
         }
         $FillData = (new QuestionnaireUnify)->UpdateStatus($QuestionCode, $StudentID, $FillTime, $FillStatus);
-        return view('ClaMEISER')->with('HistoryData', $QuestionnaireRecord)->with('StudentID', $StudentID)->with('ChildBasicData', $ChildBasicData)->with('ChildAge', $ChildBasicData->Age)->with('FillData', $FillData);
+        // return view('ClaMEISER')->with('HistoryData', $QuestionnaireRecord)->with('StudentID', $StudentID)->with('ChildBasicData', $ChildBasicData)->with('ChildAge', $ChildBasicData->Age)->with('FillData', $FillData);
+        return view('newframework.Questionnaire')->with('HistoryData', $QuestionnaireRecord)->with('StudentID', $StudentID)->with('ChildBasicData', $ChildBasicData)->with('ChildAge', $ChildBasicData->Age)->with('FillData', $FillData);
     }
     //問卷儲存、計算結果並呈現
     public function ReceiveClaMEISER(Request $request)
@@ -132,9 +133,9 @@ class QuestionnaireController extends Controller
                         $CheckFillTime = (new QuestionTable)->GetFillTime($StudentID, $QuestionCode, $CurrentYear, $Semester);
                         $CurrentData = $StudentID . "-" . $QuestionCode . "-" . $CurrentYear . "-" . $Semester . "-" . $FillTime; //問卷結果比較用
                         if ($CheckFillTime >= 2) { //填寫次數大於兩次 歷史紀錄比較可以查詢
-                            return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("QuestionName",$QuestionName)->with("FillTime",$FillTime)->with("FillDate",$FillDate)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $CurrentData)->with("ifcompare", 1)->with("ifdirect", 1);
+                            return view('newframework.Result')->with("title", "Result")->with("gradedata", $GradeData)->with("QuestionName",$QuestionName)->with("FillTime",$FillTime)->with("FillDate",$FillDate)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $CurrentData)->with("ifcompare", 1)->with("ifdirect", 1);
                         } else { //填寫次數小於兩次 歷史紀錄比較不能查詢
-                            return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("QuestionName",$QuestionName)->with("FillTime",$FillTime)->with("FillDate",$FillDate)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $CurrentData)->with("ifcompare", 0)->with("ifdirect", 1);
+                            return view('newframework.Result')->with("title", "Result")->with("gradedata", $GradeData)->with("QuestionName",$QuestionName)->with("FillTime",$FillTime)->with("FillDate",$FillDate)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $CurrentData)->with("ifcompare", 0)->with("ifdirect", 1);
                         }
                     } else {
                         session()->flash('errormessage', '保存失敗，請重新嘗試!');
@@ -172,8 +173,7 @@ class QuestionnaireController extends Controller
          * 當前學期 Semester
          * 填寫次數 FillTime
          */
-        //dd($FinalData);
-        return view('QRUnifyPage')->with("FillData", $FinalData);
+        return view('newframework.QRUnifyPage')->with("FillData", $FinalData);
     }
     //問卷歷史紀錄呈現
     public function PushHistoryClaMEISER(Request $request)
@@ -181,7 +181,7 @@ class QuestionnaireController extends Controller
         //學號-問卷代號-填寫學年-填寫學期-填寫次數
         [$FinalData, $ChildBasicData] = (new QuestionnaireUnify)->IntegrateHistoryData($request);
         //dd($FinalData);
-        return view('ClaMEISER_History')->with('ChildBasicData', $ChildBasicData)->with('HistoryData', $FinalData);
+        return view('newframework.QuestionnaireHistory')->with('ChildBasicData', $ChildBasicData)->with('HistoryData', $FinalData);
     }
     //計算結果呈現
     public function PushResult(Request $request)
@@ -198,9 +198,9 @@ class QuestionnaireController extends Controller
         [$GradeData, $TopicName] = (new QuestionTable)->GetGradeData($StudentID, $QuestionCode, $FillTime, $SchoolYear, $Semester);
         $FillDate = (new QuestionTable)->GetFillDate($StudentID, $QuestionCode, $SchoolYear, $Semester,$FillTime);
         if ($CheckFillTime >= 2) { //填寫次數大於兩次 歷史紀錄比較可以查詢
-            return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("QuestionName",$QuestionName)->with("FillTime",$FillTime)->with("FillDate",$FillDate)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $request->resultdata)->with("ifcompare", 1)->with("ifdirect", 0);
+            return view('newframework.Result')->with("title", "Result")->with("gradedata", $GradeData)->with("QuestionName",$QuestionName)->with("FillTime",$FillTime)->with("FillDate",$FillDate)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $request->resultdata)->with("ifcompare", 1)->with("ifdirect", 0);
         } else { //填寫次數小於兩次 歷史紀錄比較不能查詢
-            return view('Result')->with("title", "Result")->with("gradedata", $GradeData)->with("QuestionName",$QuestionName)->with("FillTime",$FillTime)->with("FillDate",$FillDate)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $request->resultdata)->with("ifcompare", 0)->with("ifdirect", 0);
+            return view('newframework.Result')->with("title", "Result")->with("gradedata", $GradeData)->with("QuestionName",$QuestionName)->with("FillTime",$FillTime)->with("FillDate",$FillDate)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData)->with("CurrentData", $request->resultdata)->with("ifcompare", 0)->with("ifdirect", 0);
         }
     }
     //詳細計算結果呈現
@@ -217,7 +217,7 @@ class QuestionnaireController extends Controller
         [$DetailData, $TopicName] = (new QuestionTable)->GetGradeDetailData($StudentID, $QuestionCode, $FillTime, $SchoolYear, $Semester);
         $FillDate = (new QuestionTable)->GetFillDate($StudentID, $QuestionCode, $SchoolYear, $Semester,$FillTime);
         //dd($DetailData);
-        return view('DetailResult')->with("title", "Result")->with("QuestionName",$QuestionName)->with("FillTime",$FillTime)->with("FillDate",$FillDate)->with("DetailData", $DetailData)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData);
+        return view('newframework.DetailResult')->with("title", "Result")->with("QuestionName",$QuestionName)->with("FillTime",$FillTime)->with("FillDate",$FillDate)->with("DetailData", $DetailData)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData);
     }
     //歷史紀錄計算結果比較
     public function CompareResult(Request $request)
@@ -237,7 +237,7 @@ class QuestionnaireController extends Controller
             array_push($UploadGradeData, $GradeData);
             $UploadTopicName = $TopicName;
         }
-        //dd($UploadGradeData);
-        return view('CompareResult')->with("title", "CompareResults")->with("gradedata", $UploadGradeData)->with("TopicName", $UploadTopicName)->with("CurrentTime", $CurrentFillTime);
+        // dd($UploadGradeData);
+        return view('newframework.CompareResult')->with("title", "CompareResults")->with("gradedata", $UploadGradeData)->with("TopicName", $UploadTopicName)->with("CurrentTime", $CurrentFillTime);
     }
 }

@@ -1,0 +1,34 @@
+.choose-framework{
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.choose-inner-fraework{
+    padding: 10px;
+    margin-right: 20px;
+    border: 2px dotted #ffb065;
+    display: flex;
+    flex: 0 0 30%;
+}
+.choose-inner-fraework:hover {
+    transition-duration: 600ms;
+    background-color: #ffb065;
+}
+.active{
+    background-color: #ffb065;
+}
+.table-title{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    top: 40px;
+    font-size: 30px;
+}
+@media screen and (max-width:768px) {
+    .choose-inner-fraework{
+        display: flex;
+        flex: 0 0 90%;
+        margin: 10px auto;
+    }
+}

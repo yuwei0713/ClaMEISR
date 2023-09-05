@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OpenController;
 
+
 use App\Http\Controllers\QuestionnaireController;
 
 
@@ -10,6 +11,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegisterController;
 
+use App\Http\Controllers\NewOpenController; //測試用Controller
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +24,13 @@ use App\Http\Controllers\RegisterController;
 */
 Route::get('/', [OpenController::class, 'frontdirect']);
 Route::get('/front', [OpenController::class, 'index'])->name('front.show');
+
+Route::get('/test', [NewOpenController::class, 'index']); //首頁
+Route::get('/test/childdata', [NewOpenController::class, 'childdata']); //兒童資料
+Route::get('/test/questionnaire', [NewOpenController::class, 'questionnaire']); //問卷
+Route::get('/test/information', [NewOpenController::class, 'information'])->name('cla.information.show'); //問卷與結果
+Route::get('/test/result', [NewOpenController::class, 'result']); //結果
+Route::get('/test/detailresult', [NewOpenController::class, 'detailresult']); //結果
 
 Route::group(['middleware' => ['guest']], function () {
     /**
@@ -60,6 +69,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('ChildInformation', [OpenController::class, 'PushChildInformation'])->name('child.infromation.show');
     Route::post('ChildInformation', [OpenController::class, 'ReceiveChildInformation'])->name('child.infromation.perform');
     /**
+     *  Child Information Delete/Recover Route
+     */
+    Route::post('ChildInformation/Delete', [OpenController::class, 'DeleteChildInformation'])->name('child.information.delete');
+    /**
      *  Child Information History Route
      */
     Route::get('InformationHistory/Child', [OpenController::class, 'PushHistoryChildInformation'])->name('child.history.information.show');
@@ -79,9 +92,9 @@ Route::group(['middleware' => ['auth']], function () {
     /**
      *  Questionnaire Count Detail Result Route
      */
-    Route::get('InformationHistory/CountResult/DetailResult', [QuestionnaireController::class, 'PushDetailResult'])->name('questionnaire.detailresult.show');
+    Route::get('InformationHistory/DetailResult', [QuestionnaireController::class, 'PushDetailResult'])->name('questionnaire.detailresult.show');
     /**
      * Questionnaire History Result Compare Route
      */
-    Route::get('InformationHistory/CountResult/Compare', [QuestionnaireController::class, 'CompareResult'])->name('questionnaire.result.compare.show');
+    Route::get('InformationHistory/Compare', [QuestionnaireController::class, 'CompareResult'])->name('questionnaire.result.compare.show');
     });

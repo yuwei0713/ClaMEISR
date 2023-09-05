@@ -1,0 +1,35 @@
+.services .nacc .thumb .main-white-button {
+    margin-top: 40px;
+  }
+  
+  .services .nacc .thumb .main-white-button a {
+    background-color: #c48d59;;
+    border-color: #c48d59;;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 400;
+    color: #fff;
+    text-transform: capitalize;
+    padding: 12px 25px;
+    border-radius: 7px;
+    letter-spacing: .25px;
+    transition: all .3s;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .services .nacc .thumb .main-white-button a i {
+    background-color: #fff;
+    color: #c48d59;
+    margin-right: 10px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+    font-size: 12px;
+    line-height: 22px
+  }
+  .services .nacc .thumb .main-white-button a:hover {
+    background-color: #d4a06f;
+}

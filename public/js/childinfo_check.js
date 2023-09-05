@@ -370,3 +370,9 @@ function living_other() {
         }
     }
 }
+function delete_check(){
+    var check = confirm("是否確定刪除資料，刪除後資料將無法復原!");
+    if (check == true){
+        document.getElementById("DIForm").submit();
+    }
+}
