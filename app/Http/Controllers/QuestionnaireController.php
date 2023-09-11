@@ -216,7 +216,7 @@ class QuestionnaireController extends Controller
         $ChildData = (new ChildInformationTable)->PushChildBasicData($StudentID);
         [$DetailData, $TopicName] = (new QuestionTable)->GetGradeDetailData($StudentID, $QuestionCode, $FillTime, $SchoolYear, $Semester);
         $FillDate = (new QuestionTable)->GetFillDate($StudentID, $QuestionCode, $SchoolYear, $Semester,$FillTime);
-        //dd($DetailData);
+        // dd($DetailData);
         return view('newframework.DetailResult')->with("title", "Result")->with("QuestionName",$QuestionName)->with("FillTime",$FillTime)->with("FillDate",$FillDate)->with("DetailData", $DetailData)->with("TopicName", $TopicName)->with("ChildBasic", $ChildData);
     }
     //歷史紀錄計算結果比較

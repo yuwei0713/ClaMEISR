@@ -1708,16 +1708,31 @@ class QuestionTable
                 $Date = array();
                 // Finish = 1 or FillTime > 1，代表至少填寫完成一次以上
                 if (($NewFillData["Finish"] == 1) || ($NewFillData["FillTime"] > 1)) {
-                    for ($FillTime = 1; $FillTime <= $NewFillData["FillTime"]; $FillTime++) {
-                        $FillDate = DB::table('questionstoretable')
-                            ->select("FillDate")
-                            ->where('StudentID', $StudentID)
-                            ->where('QuestionCode', $CurrentQuestionCode)
-                            ->where('SchoolYear', $NewFillData["SchoolYear"])
-                            ->where('Semester', $NewFillData["Semester"])
-                            ->where('FillTime', $FillTime)
-                            ->first();
-                        array_push($Date, $FillDate->FillDate);
+                    if($NewFillData["Finish"] == 0){
+                        for ($FillTime = 1; $FillTime < $NewFillData["FillTime"]; $FillTime++) {
+                            $FillDate = DB::table('questionstoretable')
+                                ->select("FillDate")
+                                ->where('StudentID', $StudentID)
+                                ->where('QuestionCode', $CurrentQuestionCode)
+                                ->where('SchoolYear', $NewFillData["SchoolYear"])
+                                ->where('Semester', $NewFillData["Semester"])
+                                ->where('FillTime', $FillTime)
+                                ->first();
+                            array_push($Date, $FillDate->FillDate);
+                        }
+                    }
+                    if($NewFillData["Finish"] == 1){
+                        for ($FillTime = 1; $FillTime <= $NewFillData["FillTime"]; $FillTime++) {
+                            $FillDate = DB::table('questionstoretable')
+                                ->select("FillDate")
+                                ->where('StudentID', $StudentID)
+                                ->where('QuestionCode', $CurrentQuestionCode)
+                                ->where('SchoolYear', $NewFillData["SchoolYear"])
+                                ->where('Semester', $NewFillData["Semester"])
+                                ->where('FillTime', $FillTime)
+                                ->first();
+                            array_push($Date, $FillDate->FillDate);
+                        }
                     }
                     $NewFillData +=  ["FillDate" => $Date];
 

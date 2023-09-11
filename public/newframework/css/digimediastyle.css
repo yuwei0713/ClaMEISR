@@ -16,29 +16,6 @@ Services Style
   position: relative;
 }
 
-.services:after {
-  content: '';
-  background-image: url(../images/services-left-dec.jpg);
-  background-repeat: no-repeat;
-  position: absolute;
-  left: 0;
-  top: 0px;
-  width: 786px;
-  height: 1217px;
-  z-index: 0;
-}
-
-.services:before {
-  content: '';
-  background-image: url(../images/services-right-dec.jpg);
-  background-repeat: no-repeat;
-  position: absolute;
-  right: 0;
-  top: 400px;
-  width: 161px;
-  height: 413px;
-  z-index: 0;
-}
 
 .services .section-heading {
   text-align: center;
@@ -138,7 +115,7 @@ Services Style
 }
 
 .services ul.nacc li .right-image img {
-  max-width: 420px;
+  max-width: 100%;
   float: right;
 }
 
@@ -203,7 +180,7 @@ Services Style
 }
 
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .service-item {
     text-align: center;
     padding: 30px;
@@ -237,5 +214,8 @@ Services Style
 
   .services ul.nacc li .right-image img {
     float: none;
+  }
+  .services .naccs .menu div {
+    width: 20%;
   }
 }
