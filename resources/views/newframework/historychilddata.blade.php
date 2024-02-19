@@ -2,6 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+    @include('layouts.session-message')
     <title>學生基本資料填寫</title>
     <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8 width=device-width, initial-scale=1">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">

@@ -195,9 +195,7 @@
                         <div class="section-title text-start">
                             <h1 class="display-5 mb-4">關於您</h1>
                         </div>
-                        <p class="mb-4 pb-2">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam
-                            amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo erat
-                            amet</p>
+                        <p class="mb-4 pb-2">您目前使用本網站的基本資訊</p>
                         <div class="row g-4 mb-4 pb-2">
                             <div class="col-sm-6 wow fadeIn" data-wow-delay="0.1s">
                                 <div class="d-flex align-items-center">
@@ -222,7 +220,11 @@
                                 </div>
                             </div>
                         </div>
-                        <a onclick="location.href='{{ route('cla.information.show') }}'" class="btn btn-primary py-3 px-5">查看結果</a>
+                        @if($flag == 0)
+                        <a onclick="DirectEmpty()">察看結果</a>
+                        @else
+                        <a onclick="location.href='{{ route('cla.unify.show') }}'" class="btn btn-primary py-3 px-5">查看結果</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -350,10 +352,7 @@
                                                 <div class="col-lg-6 align-self-center">
                                                     <div class="left-text">
                                                         <h4>問卷歷史紀錄及結果查詢</h4>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                                                            elit, sedr do eiusmod deis tempor incididunt ut
-                                                            labore et dolore kengan darwin doerski token.
-                                                            dover lipsum lorem and the others.</p>
+                                                        <p>查詢問卷以及結果的歷史資訊，也可查看詳細資訊</p>
                                                         <div class="content_text">
                                                             <div class="services-option-framework">
                                                                 <div class="main-white-button">
@@ -430,11 +429,7 @@
                 <div class="image_iman"><img src="../newframework/img/new-about-img.jpg" class="about_img"></div>
                 <div class="about_taital_box">
                     <h1 class="about_taital_1">ClaMEISR</h1>
-                    <p class=" about_text">has a more-or-less normal distribution of letters, as opposed to using
-                        'Content here, content here', making it look like readable English. Many desktop publishing
-                        packages and web page editorhas a more-or-less normal distribution of letters, as opposed to
-                        using 'Content here, content here', making it look like readable English. Many desktop
-                        publishing packages and web page editor</p>
+                    <p class=" about_text">ClaMEISR 網站是由中臺科技大學以及東海大學聯合打造，透過網站提供的問卷，經由填寫過後可得知兒童目前的狀況</p>
                     <div class="readmore_btn"><a href="#">Read More</a></div>
                 </div>
             </div>
@@ -631,7 +626,7 @@
             <div class="section-title text-center">
                 <h1 class="display-5 mb-5">Team Members</h1>
             </div>
-            <div class="row g-4">
+            <!-- <div class="row g-4">
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="team-item">
                         <div class="overflow-hidden position-relative">
@@ -696,7 +691,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div> -->
     <!-- Team End -->

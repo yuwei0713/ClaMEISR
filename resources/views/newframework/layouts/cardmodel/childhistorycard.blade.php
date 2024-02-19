@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <!-- 搜尋欄位-->
-                <div class="search" id="childsearch">
+                <!-- <div class="search" id="childsearch">
                     <div class="multiSelect">
                         <span class="selectTitle">入學年度</span>
                         <div class="selectContent">
@@ -55,7 +55,7 @@
                     <script>
 
                     </script>
-                </div>
+                </div> -->
                 <!-- 搜尋欄位 end-->
                 <form action="{{ route('child.history.information.show') }}" method="GET" id="ChooseHistory">
                     @csrf
