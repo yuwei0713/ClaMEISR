@@ -138,7 +138,7 @@ class OpenController extends Controller
             return redirect('front');
         } else {
             session()->flash('errormessage', '資料重複，請修改!');
-            return redirect()->back()->withInput();;
+            return redirect()->back()->withInput();
         }
         /**
          * student_name = 兒童姓名

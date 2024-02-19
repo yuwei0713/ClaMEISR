@@ -25,12 +25,6 @@ use App\Http\Controllers\NewOpenController; //測試用Controller
 Route::get('/', [OpenController::class, 'frontdirect']);
 Route::get('/front', [OpenController::class, 'index'])->name('front.show');
 
-Route::get('/test', [NewOpenController::class, 'index']); //首頁
-Route::get('/test/childdata', [NewOpenController::class, 'childdata']); //兒童資料
-Route::get('/test/questionnaire', [NewOpenController::class, 'questionnaire']); //問卷
-Route::get('/test/information', [NewOpenController::class, 'information'])->name('cla.information.show'); //問卷與結果
-Route::get('/test/result', [NewOpenController::class, 'result']); //結果
-Route::get('/test/detailresult', [NewOpenController::class, 'detailresult']); //結果
 
 Route::group(['middleware' => ['guest']], function () {
     /**
