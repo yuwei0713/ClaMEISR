@@ -27,7 +27,7 @@
 
         <div class="form-group form-floating mb-3">
           <label for="floatingPassword" class="form-title">密碼</label>
-          <input type="password" class="form-control" name="password" value="{{ old('password') }}" placeholder="請輸入密碼" required="required">
+          <input type="password" class="form-control" name="password" value="{{ old('password') }}" placeholder="請輸入密碼" required="required" autocomplete="off">
 
           @if ($errors->has('password'))
           <span class="text-danger text-left">{{ $errors->first('password') }}</span>

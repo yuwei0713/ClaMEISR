@@ -25,7 +25,7 @@
 
         <div class="form-group form-floating mb-3">
         <label for="floatingPassword" class="form-title">密碼</label>
-          <input type="password" class="form-control" name="password" value="{{ old('password') }}" placeholder="Password" required="required">
+          <input type="password" class="form-control" name="password" value="{{ old('password') }}" placeholder="Password" required="required" autocomplete="off">
           @if ($errors->has('password'))
           <span class="text-danger text-left">{{ $errors->first('password') }}</span>
           @endif
@@ -33,7 +33,7 @@
 
         <div class="form-group form-floating mb-3">
         <label for="password_confirmation" class="form-title">密碼確認</label>
-          <input type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}" placeholder="Confirm Password" required="required">
+          <input type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}" placeholder="Confirm Password" required="required" autocomplete="off">
           @if ($errors->has('password_confirmation'))
           <span class="text-danger text-left">{{ $errors->first('password_confirmation') }}</span>
           @endif

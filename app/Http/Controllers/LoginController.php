@@ -32,7 +32,7 @@ class LoginController extends Controller
     public function login(LoginRequest $request)
     {
         $request->validate([
-            'username' => 'required',
+            'username' => 'required|regex:/^[a-zA-Z0-9]+$/',
             'schoolnumber' => 'required',
             'password' => 'required',
         ]);

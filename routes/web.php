@@ -1,4 +1,6 @@
 <?php
+use App\Http\Middleware\QuestionnaireParameterValid;
+use App\Http\Middleware\TeacherParameterValid;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OpenController;
@@ -11,7 +13,6 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegisterController;
 
-use App\Http\Controllers\NewOpenController; //測試用Controller
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,7 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
     /**
      * Teacher Basic Data Insert Route
      */
-    Route::post('/teacherdata', [OpenController::class, 'ReceiveTeacherData'])->name('user.teacherdata.Receive');
+    Route::post('/teacherdata', [OpenController::class, 'ReceiveTeacherData'])->name('user.teacherdata.Receive')->middleware(TeacherParameterValid::class);
     /**
      * Teacher Basic Data Update Route
      */
@@ -56,7 +57,7 @@ Route::group(['middleware' => ['auth']], function () {
      *  Questionnaire Route
      */
     Route::get('ClaMEISER', [QuestionnaireController::class, 'PushClaMEISER'])->name('user.ClaMEISER.show');
-    Route::post('ClaMEISER', [QuestionnaireController::class, 'ReceiveClaMEISER'])->name('user.Receive');
+    Route::post('ClaMEISER', [QuestionnaireController::class, 'ReceiveClaMEISER'])->name('user.Receive')->middleware(QuestionnaireParameterValid::class);
     /** 
      *  Child Information Route
      */

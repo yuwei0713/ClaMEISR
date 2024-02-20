@@ -112,7 +112,7 @@ class QuestionnaireController extends Controller
             $success = (new QuestionnaireUnify)->receive($request, $StudentID, $TeacherAccount, $FillTime);
             if ($success) {
                 session()->flash('message', '保存成功!');
-                return redirect()->action([QuestionnaireController::class, 'PushClaMEISER'],$request);
+                return back();
             } else {
                 session()->flash('errormessage', '保存失敗，請重新嘗試!');
                 return redirect()->back();

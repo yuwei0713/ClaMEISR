@@ -4,7 +4,7 @@
 <head>
     <title>ClaMEISER-問卷填寫</title>
     <meta name="viewport" http-equiv="Content-Type" content="text/html;charset=UTF-8 width=device-width,initial-scale=1">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon -->
     <link href="../newframework/img/favicon.ico" rel="icon">
