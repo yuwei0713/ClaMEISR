@@ -78,6 +78,9 @@ button{
     padding-left: 3rem;
     display: flex;
 }
+.dataput{
+    display: none;
+}
 @media screen and (max-width:1200px) {
     .BasicBlock{
         flex-direction: column;

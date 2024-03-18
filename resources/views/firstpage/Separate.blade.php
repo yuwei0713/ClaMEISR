@@ -1,4 +1,4 @@
-<div class="option_title"><span style="color:red">*</span>身分別：</div>
+<div class="option_title"><span class="need">*</span>身分別：</div>
 <div class="teacher_option_content">
     <label class="separate_option">
         <span class="option_position">

@@ -295,11 +295,13 @@ function checkdiagnosis(status) { //診斷資料
 
     if (status == "confirm") {
         //degree
-        if (degree) {
-            document.getElementById("q8").style.border = "none";
-        } else {
-            document.getElementById("q8").style.border = "3px solid #FF006F";
-            jumpflag = true;
+        if (diagnosis.value != "other"){
+            if (degree) {
+                document.getElementById("q8").style.border = "none";
+            } else {
+                document.getElementById("q8").style.border = "3px solid #FF006F";
+                jumpflag = true;
+            }
         }
     }
     if (status == "suspected") {

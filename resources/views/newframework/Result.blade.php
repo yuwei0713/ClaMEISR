@@ -3,7 +3,7 @@
 
 <head>
     <title>ClaMEISER-計算結果</title>
-    <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8 width=device-width, initial-scale=1">
+    <meta name="viewport" http-equiv="Content-Type" content="text/html;charset=UTF-8 width=device-width,initial-scale=1">
     <link href="../newframework/css/bootstrap.min.css" rel="stylesheet">
     <script src="../js/jquery-3.5.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../newframework/css/Result/ResultPage.css" />
@@ -20,16 +20,13 @@
     <link href="../newframework/css/startupstyle.css" rel="stylesheet">
     <script src="../newframework/lib/wow/wow.min.js"></script>
     <script src="../newframework/js/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../newframework/js/Chartjs/dist/chart.umd.js"></script>
 </head>
 
 <body>
     @if($errors->any())
-    <script>
-        $(document).ready(function() {
-            alert("{{ $errors->first() }}")
-        })
-    </script>
+    <input type="hidden" id="errormessage" value="{{ $errors->first() }}">
+    <script src="../newframework/js/Result/Anyerror.js"></script>
     @endif
     @include('newframework.layouts.universal.nav')
     <div class="container Block">
@@ -180,16 +177,11 @@
                 </form>
             </label>
             @elseif( $ifcompare == 0)
-            <script>
-                function notcompare() {
-                    alert("填寫次數未超過2次");
-                }
-            </script>
             <label class="result-detail-content">
-                <button type="button" onclick="notcompare()">歷史紀錄比較</button>
+                <button type="button" id="notcompare">歷史紀錄比較</button>
             </label>
+            <script src="../newframework/js/Result/notcompare.js"></script>
             @endif
-
             <label class="result-detail-content">
                 <form action="{{ route('questionnaire.detailresult.show') }}" method="GET">
                     @csrf
@@ -200,78 +192,42 @@
         </div>
         <div class="pre-page">
             @if( $ifdirect == 1 )
-            <button type="button" class="pre-button" onclick="location.href='{{ url('/front') }}'"><span>回首頁</span></button>
+            <button type="button" class="pre-button" id="prebutton" data-action="front"><span>回首頁</span></button>
             @elseif( $ifdirect == 0 )
-            <button type="button" class="pre-button" onclick="history.back()"><span>回上頁</span></button>
+            <button type="button" class="pre-button" id="prebutton" data-action="back"><span>回上頁</span></button>
             @endif
+            <script src="../newframework/js/Result/prebutton.js"></script>
+        </div>
+    </div>
+    <div class="dataput">
+        <div class="topic">
+        @for($i = 1; $i < count($TopicName); $i++)
+            @php
+                $TopicName[$i] = preg_replace("/\([^)]+\)/", "", $TopicName[$i]);
+            @endphp
+        <input type="hidden" name="topic" value="{{ $TopicName[$i] }}">
+        @endfor
+        @php
+            $TopicName[0] = preg_replace("/\([^)]+\)/", "", $TopicName[0]);
+        @endphp
+        <input type="hidden" name="topic" value="{{ $TopicName[0] }}">
+        </div>
+        <div class="data">
+            <div class="forage">
+                @for($i = 1; $i < count($TopicName); $i++)
+                    <input type="hidden" name="foragedata" value="{{ $gradedata[$i]->AgeProficientPercent }}">
+                @endfor
+                    <input type="hidden" name="foragedata" value="{{ $gradedata[0]->AgeProficientPercent }}">
+            </div>
+            <div class="forall">
+                @for($i = 1; $i < count($TopicName); $i++)
+                    <input type="hidden" name="foralldata" value="{{ $gradedata[$i]->AllProficientPercent }}">
+                @endfor
+                    <input type="hidden" name="foralldata" value="{{ $gradedata[0]->AllProficientPercent }}">
+            </div>
         </div>
     </div>
 
-    <script>
-        const ctx = document.getElementById('myChart');
-
-        new Chart(ctx, {
-            data: {
-                labels: [@for($i = 1; $i < count($TopicName); $i++)
-                    @php
-                    $TopicName[$i] = preg_replace("/\([^)]+\)/", "", $TopicName[$i]);
-                    @endphp '{{ $TopicName[$i] }}',
-                    @endfor
-                    @php
-                    $TopicName[0] = preg_replace("/\([^)]+\)/", "", $TopicName[0]);
-                    @endphp '{{ $TopicName[0] }}'
-                ],
-                datasets: [{
-                    type: 'line',
-                    label: '符合年齡的精熟度',
-
-                    data: [
-                        @for($i = 1; $i < count($TopicName); $i++)
-                        '{{ $gradedata[$i]->AgeProficientPercent }}',
-                        @endfor '{{ $gradedata[0]->AgeProficientPercent }}'
-                    ],
-                    borderWidth: 1
-                }, {
-                    type: 'line',
-                    label: '作息整體的精熟度',
-                    data: [@for($i = 1; $i < count($TopicName); $i++)
-                        '{{ $gradedata[$i]->AllProficientPercent }}',
-                        @endfor '{{ $gradedata[0]->AllProficientPercent }}'
-                    ]
-                }]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        labels: {
-                            // This more specific font property overrides the global property
-                            font: {
-                                size: 25
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            font: {
-                                size: 18,
-                            }
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            font: {
-                                size: 20,
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    </script>
-
 </body>
-
+<script src="../newframework/js/Result/ShowChart.js"></script>
 </html>

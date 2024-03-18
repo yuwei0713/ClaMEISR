@@ -10,5 +10,20 @@ function count_age() {
             age--;
         }
         document.getElementById("child_age").value = age;
-    }catch{}
+    } catch(e) { }
 }
+$(document).ready(function () {
+    var maxdate = new Date(new Date().getFullYear() - 2, new Date().getMonth(), new Date().getDate());
+    var defaultdate = new Date(new Date().getFullYear() - 2, new Date().getMonth(), new Date().getDate());
+    var formattedDate = defaultdate.toISOString().split('T')[0];
+    $('#age_datepicker').datepicker({
+        uiLibrary: 'bootstrap4',
+        format: 'yyyy-mm-dd',
+        maxDate: maxdate,
+        value: formattedDate, // Set the default date directly during initialization
+        change: function () {
+            count_age();
+        }
+    });
+    count_age();
+});

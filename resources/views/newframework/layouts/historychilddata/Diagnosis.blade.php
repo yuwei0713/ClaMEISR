@@ -2,7 +2,7 @@
     <!--第一項 7 障礙類別(特殊生)，疑似障礙類別(疑似生)-->
     <div class="std_information_framwork" id="q7">
         <div class="option_title">障礙類別(單選)
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="diagnosis">
             @if($ChildFullData['Diagnosis'] == "智能障礙")
@@ -150,11 +150,7 @@
             @endif
 
             @if($ChildFullData['Diagnosis'] == "other")
-            <script>
-                $(document).ready(function() {
-                    $("#other_diagnosis").css("display", "block");
-                });
-            </script>
+            <script src="../newframework/js/childhistorydata/otherdiagnosisblock.js"></script>
             <label class="diagnosis_framwork diagnosis_framework_four input-option input-click-option">
                 <input class="option_square" type="radio" name="diagnosis" value="other" checked>
                 <span class="choice-css">其他障礙</span>
@@ -179,21 +175,13 @@
     <!--第二項 8 障礙程度(特殊生)-->
     @if($ChildFullData['Status'] == "confirm")
         @if($ChildFullData['Diagnosis'] != "other")
-        <script>
-            $(document).ready(function() {
-                $(".manual_option").css("display", "block");
-            });
-        </script>
+        <script src="../newframework/js/childhistorydata/manualblock.js"></script>
         @else
-        <script>
-            $(document).ready(function() {
-                $(".manual_option").css("display", "none");
-            });
-        </script>
+        <script src="../newframework/js/childhistorydata/manualnone.js"></script>
         @endif
     <div class="std_information_framwork manual_option" id="q8">
         <div class="option_title">障礙程度
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="diagnosis">
             @if($ChildFullData['Degree'] == "輕度")
@@ -248,7 +236,7 @@
     @else
     <div class="std_information_framwork manual_option" id="q8">
         <div class="option_title">障礙程度
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="diagnosis">
             <label class="diagnosis_framwork diagnosis_framework_four input-option">
@@ -275,7 +263,7 @@
     @if($ChildFullData['Status'] == "suspected")
     <div class="std_information_framwork" id="q9">
         <div class="option_title">補充說明
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="diagnosis">
             <label class="diagnosis_textarea_framwork">
@@ -290,7 +278,7 @@
     @else
     <div class="std_information_framwork" id="q9">
         <div class="option_title">補充說明
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="diagnosis">
             <label class="diagnosis_textarea_framwork">
@@ -302,15 +290,11 @@
     <!--第三項end-->
     <!--第四項 10 鑑定安置類別-->
     @if($ChildFullData['Diagnosis'] == "發展遲緩")
-    <script>
-        $(document).ready(function() {
-            $(".diagnosis_option").css("display", "block");
-        });
-    </script>
+    <script src="../newframework/js/childhistorydata/diagnosisoptionblock.js"></script>
     @endif
     <div class="std_information_framwork diagnosis_option" id="q10">
         <div class="option_title">鑑定安置類別
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="diagnosis">
             @if(preg_match("/無特別標註/",$ChildFullData['Identities']))
@@ -390,7 +374,7 @@
     <!--第五項 11 鑑定安置佐證-->
     <div class="std_information_framwork" id="q11">
         <div class="option_title">鑑定安置佐證
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="diagnosis">
             @if(preg_match("/心理衡鑑/",$ChildFullData['Proofs']))
@@ -430,11 +414,7 @@
             @endif
 
             @if(preg_match("/不需填寫/",$ChildFullData['Proofs']))
-            <script>
-                $(document).ready(function() {
-                    document.getElementById("q12").style.display = "none";
-                });
-            </script>
+            <script src="../newframework/js/childhistorydata/proofnone.js"></script>
             <label class="diagnosis_framwork diagnosis_framework_four input-option input-click-option">
                 <input class="option_square" type="checkbox" name="proofs[]" value="不需填寫" checked>
                 <span class="choice-css">不需填寫</span>
@@ -451,7 +431,7 @@
     <!--第六項 12 身障證明-->
     <div class="std_information_framwork" id="q12">
         <div class="option_title">是否領有身障證明
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="diagnosis">
             @if($ChildFullData['Manual'] == "yes")
@@ -483,7 +463,7 @@
     <!--第七項 13 安置結果-->
     <div class="std_information_framwork" id="q13">
         <div class="option_title">安置結果
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="diagnosis">
             @if($ChildFullData['Placement'] == "普通班(接受特教服務)")

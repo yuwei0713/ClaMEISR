@@ -1,16 +1,11 @@
 <!--教師基本資料Modal-->
 @if( $Fillflag == -1)
-<script type="text/javascript">
-    $(function() {
-        fillteacher();
-    });
-</script>
 <div id="teachercard" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <div>教師基本資料</div>
-                <button type="button" class="btn-close" onclick="location.href='{{ route('logout.perform') }}'" data-dismiss="modal">登出</button>
+                <button type="button" class="btn-close" href='{{ route('logout.perform') }}' data-dismiss="modal">登出</button>
             </div>
             <div class="modal-body">
                 <form action="{{ route('user.teacherdata.Receive') }}" method="POST" id="TeacherBasicData">
@@ -149,7 +144,7 @@
                         </div>
                     </div>
                     <div class="next-page">
-                        <button type="button" class="btn btn-secondary" onclick="checkteacherdatasend()">確定</button>
+                        <button type="button" class="btn btn-secondary" id="checkteacherdatasend">確定</button>
                         <div id="teacher_fill_alart" class="fill-alart"></div>
                     </div>
                 </form>
@@ -157,6 +152,7 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="../newframework/js/teachercard/firstfill.js"></script>
 @else
 <div id="historyteachercard" class="modal fade">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
@@ -172,7 +168,7 @@
                         <div class="SchoolBasicInnerFramework">
                             <label class="Basic_option">
                                 <div class="option_title">
-                                    <span style="color:red">*</span>姓名：
+                                    <span class="need">*</span>姓名：
                                 </div>
                                 <div class="input_style">
                                     <input name="TeacherName" id="TeacherName" class="text_style" type="text" value="{{ $TeacherData["TeacherName"] }}" maxlength="10">
@@ -181,7 +177,7 @@
                             </label>
                             <label class="Basic_option">
                                 <div class="option_title">
-                                    <span style="color:red">*</span>帳號：
+                                    <span class="need">*</span>帳號：
                                 </div>
                                 <div class="input_style">
                                     <input name="Account" id="Account" class="text_style" type="text" readonly="readonly" value="{{ $TeacherData["Username"] }}">
@@ -189,7 +185,7 @@
                             </label>
                             <label class="Basic_option">
                                 <div class="option_title">
-                                    <span style="color:red">*</span>學校：
+                                    <span class="need">*</span>學校：
                                 </div>
                                 <div class="input_style">
                                     <input name="SchoolName" id="SchoolName" class="text_style" type="text" readonly="readonly" value="{{  $TeacherData["SchoolName"] }}">
@@ -210,7 +206,7 @@
                         @include('firstpage.RoutinesBased')
                     </div>
                     <div class="next-page">
-                        <button type="button" class="btn btn-secondary" onclick="checkhistoryteacherdatasend()">修改</button>
+                        <button type="button" class="btn btn-secondary" id="checkhistoryteacherdatasend">修改</button>
                         <div id="teacher_fill_alart" class="fill-alart"></div>
                     </div>
                 </form>

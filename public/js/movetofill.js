@@ -11,7 +11,7 @@ function movetounfill(){
                 if (getSelectedValue == null) {
                     if (finish_flag == 0) {
                         changeshow(i);
-                        document.getElementById(option_name).style.border = "3px solid #ffc107";
+                        document.getElementById(option_name).classList.add("notfillyet");
                         document.location.hash = "#" + option_name; //jump
                         finish_flag = 1;
                     }
@@ -22,5 +22,11 @@ function movetounfill(){
 }
 $(".rTableRow").click(function(){
     var divID = this.id;
-    document.getElementById(divID).style.border = "none";
+    document.getElementById(divID).classList.remove("notfillyet");
+    document.getElementById(divID).classList.remove("shouldfill");
 });
+try{
+    document.getElementById("movetofill").addEventListener('click', function(){
+        movetounfill();
+    });
+}catch(e){}

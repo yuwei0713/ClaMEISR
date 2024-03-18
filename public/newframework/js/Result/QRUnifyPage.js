@@ -4,3 +4,9 @@ $(document).ready(function ($) {
     $(".toggle-row").not($(this).next()).find('.sub-table-wrap').slideUp('fast');
   });
 });
+try{
+  var backButton = document.getElementById("backButton").addEventListener("click", function() {
+    // Navigate back in history when the button is clicked
+    history.back();
+  });
+}catch(e){}

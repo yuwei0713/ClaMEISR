@@ -20,7 +20,7 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">功能</a>
                     <div class="dropdown-menu">
-                        <a onclick="location.href='{{ route('cla.unify.show') }}'" class="dropdown-item">問卷與結果查詢</a>
+                        <a href='{{ route('cla.unify.show') }}' class="dropdown-item">問卷與結果查詢</a>
                         <!-- <a href="detail.html" class="dropdown-item">Blog Detail</a> -->
                     </div>
                 </div>
@@ -33,7 +33,6 @@
                         @endif
                     </a>
                     <div class="dropdown-menu">
-                        <!-- <a onclick="historyteacher()" class="dropdown-item">個人檔案</a> -->
                         <a href="{{ route('logout.perform') }}" class="dropdown-item">登出</a>
                     </div>
                 </div>

@@ -20,7 +20,8 @@ class VerifyCsrfToken extends Middleware
         'front',
         'InformationHistory',
         'logout',
-        'login'
+        'login',
+        'register'
     ];
 
     /**

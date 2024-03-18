@@ -20,7 +20,7 @@ function checkoutput(flag) {
                     if (document.getElementById(option_name).classList.contains("over_age")) {
                         fill_count++;
                     } else {
-                        document.getElementById(option_name).style.border = "3px solid #FF006F";
+                        document.getElementById(option_name).classList.add("shouldfill");
                         if (jump_count == 0) {
                             changeshow(i);
                             document.location.hash = "#" + option_name;
@@ -30,7 +30,7 @@ function checkoutput(flag) {
                     document.getElementById("fill_alart").textContent = "問卷尚未填寫完畢!!!"
                 }
                 else {
-                    document.getElementById(option_name).style.border = "none";
+                    document.getElementById(option_name).classList.remove("shouldfill");
                     fill_count++;
                 }
             }
@@ -46,3 +46,12 @@ function checkoutput(flag) {
         }
     }
 }
+try{
+    var checkoutputElements = document.getElementsByName("checkoutput");
+    checkoutputElements.forEach(function(element) {
+        element.addEventListener("click", function() {
+            var number = this.getAttribute("data-checkflag");
+            checkoutput(number);
+        });
+    });
+}catch(e){}

@@ -96,7 +96,6 @@
     // Portfolio isotope and filter
     $(document).on("click", ".naccs .menu div", function () {
         var numberIndex = $(this).index();
-        console.log(numberIndex);
         if (!$(this).is("active")) {
             $(".naccs .menu div").removeClass("active");
             $(".naccs ul li").removeClass("active");

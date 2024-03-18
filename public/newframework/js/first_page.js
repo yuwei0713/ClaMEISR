@@ -115,3 +115,82 @@ $(document).ready(function (){
         $('#TeacherHistoryData')[0].reset();
     });
 });
+//onclick
+try{
+    var fillStatusElements = document.getElementsByName("fillstatus");
+    fillStatusElements.forEach(function(element) {
+        element.addEventListener("click", function() {
+            fillstatus();
+        });
+    });
+}catch(e){}
+
+try{
+    var DirectEmptyElements = document.getElementsByName("DirectEmpty");
+    DirectEmptyElements.forEach(function(element) {
+        element.addEventListener("click", function() {
+            DirectEmpty();
+        });
+    });
+}catch(e){}
+
+try{
+    var childhistorycheckElements = document.getElementsByName("childhistorycheck");
+    childhistorycheckElements.forEach(function(element) {
+        element.addEventListener("click", function() {
+            childhistorycheck();
+        });
+    });
+}catch(e){}
+
+try{
+    var fillnumberElements = document.getElementsByName("fillnumber");
+    fillnumberElements.forEach(function(element) {
+        element.addEventListener("click", function() {
+            var number = this.getAttribute("data-fillnumber");
+            fillnumber(number);
+        });
+    });
+}catch(e){}
+
+try{
+    document.getElementById("historyteacher").addEventListener('click', function(){
+        historyteacher();
+    });
+}catch(e){}
+try{
+    document.getElementById("checkhistorysend").addEventListener('click', function(){
+        checkhistorysend();
+    });
+}catch(e){}
+try{
+    document.getElementById("checkhistoryteacherdatasend").addEventListener('click', function(){
+        checkhistoryteacherdatasend();
+    });
+}catch(e){}
+try{
+    document.getElementById("checkteacherdatasend").addEventListener('click', function(){
+        checkteacherdatasend();
+    });
+}catch(e){}
+try{
+    document.getElementById("checkstatussend").addEventListener('click', function(){
+        checkstatussend();
+    });
+}catch(e){}
+
+try{
+    document.getElementById("jumptostatussend").addEventListener('click', function(){
+        var jump = this.getAttribute("data-jump");
+        jumptostatussend(jump);
+    })
+}catch(e){}
+try{
+    var checkchildsendElements = document.getElementsByName("checkchildsend");
+    checkchildsendElements.forEach(function(element) {
+        element.addEventListener("click", function() {
+            var number = this.getAttribute("data-questioncode");
+            checkchildsend(number);
+        });
+    });
+}catch(e){}

@@ -22,110 +22,60 @@
     <link rel="stylesheet" type="text/css" href="../newframework/css/Result/ResultPage.css" />
     <link rel="stylesheet" type="text/css" href="../newframework/css/Result/Result.css" />
     <link rel="stylesheet" type="text/css" href="../newframework/css/Result/Compare.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../newframework/js/Chartjs/dist/chart.umd.js"></script>
 </head>
-
 <body>
 @include('newframework.layouts.universal.nav')
     <div class="container Block">
         <div class="choose-framework">
             @for($filltime = 0; $filltime < count($gradedata); $filltime++) 
             <label class="choose-inner-fraework flip">
-                    <input type="checkbox" id="{{$filltime+1}}" onclick="insert_data({{$filltime}})" name="horns">
+                    <input type="checkbox" name="fillbutton" data-filltime="{{$filltime+1}}" id="{{$filltime+1}}">
                     <span>第{{$filltime+1}}筆資料</span>
             </label>
             @endfor
         </div>
-        
-        <script>
-            let first_old_data = [
-                @for($filltime = 0; $filltime < count($gradedata); $filltime++)[
-                    @for($i = 1; $i < count($TopicName); $i++)
-                    '{{ $gradedata[$filltime][$i]->AgeProficientPercent }}',
-                    @endfor '{{ $gradedata[$filltime][0]->AgeProficientPercent }}'
-                ],
-                @endfor
-            ];
-            let second_old_data = [
-                @for($filltime = 0; $filltime < count($gradedata); $filltime++)[
-                    @for($i = 1; $i < count($TopicName); $i++)
-                    '{{ $gradedata[$filltime][$i]->AllProficientPercent }}',
-                    @endfor '{{ $gradedata[$filltime][0]->AllProficientPercent }}'
-                ],
-                @endfor
-            ]
-            var first_new_data = []; //勾選後修改資料(新資料集)
-            var second_new_data = []; //勾選後修改資料(新資料集)
-
-            function insert_data(id) {
-                var num = document.getElementById(id + 1);
-                var label = num.closest("label")
-                if (num.checked) { //確認勾選後，將完整資料集中勾選的該筆資料加入新資料
-                    label.classList.add("active");
-                    first_new_data[id] = first_old_data[id];
-                    second_new_data[id] = second_old_data[id];
-                }
-                if (!num.checked) { //取消勾選後，將新資料集中該筆勾選資料刪除
-                    label.classList.remove("active");
-                    first_new_data[id] = null;
-                    second_new_data[id] = null;
-                }
-                FirstChart.data = {
-                    labels: [
-                        @for($i = 1; $i < count($TopicName); $i++)
-                        @php
-                        $TopicName[$i] = preg_replace("/\([^)]+\)/", "", $TopicName[$i]);
-                        @endphp '{{ $TopicName[$i] }}',
-                        @endfor
-                        @php
-                        $TopicName[0] = preg_replace("/\([^)]+\)/", "", $TopicName[0]);
-                        @endphp '{{ $TopicName[0] }}'
-                    ],
-                    datasets: [
-                        @for($filltime = 1; $filltime <= count($gradedata); $filltime++) {
-                            type: 'line',
-                            label: '第{{((int)$filltime)}}次填寫',
-                            data: first_new_data[
-                                {{$filltime - 1}}
-                            ],
-                            borderWidth: 1
-                        },
-                        @endfor
-                    ]
-                };
-                SecondChart.data = {
-                    labels: [
-                        @for($i = 1; $i < count($TopicName); $i++)
-                        @php
-                        $TopicName[$i] = preg_replace("/\([^)]+\)/", "", $TopicName[$i]);
-                        @endphp '{{ $TopicName[$i] }}',
-                        @endfor
-                        @php
-                        $TopicName[0] = preg_replace("/\([^)]+\)/", "", $TopicName[0]);
-                        @endphp '{{ $TopicName[0] }}'
-                    ],
-                    datasets: [
-                        @for($filltime = 1; $filltime <= count($gradedata); $filltime++) {
-                            type: 'line',
-                            label: '第{{((int)$filltime)}}次填寫',
-                            data: second_new_data[
-                                {{$filltime - 1}}
-                            ],
-                            borderWidth: 1
-                        },
-                        @endfor
-                    ]
-                };
-                FirstChart.update(); //更新
-                SecondChart.update();
-            }
-        </script>
         <!--視覺化圖形-->
         <div>
             <canvas id="FirstChart" class="vision"></canvas>
         </div>
         <div>
             <canvas id="SecondChart" class="vision"></canvas>
+        </div>
+        <div class="dataput">
+            <input type="hidden" id="totalfill" value="{{ count($gradedata) }}">
+            <div class="topic">
+                @for($i = 1; $i < count($TopicName); $i++)
+                    @php
+                        $TopicName[$i] = preg_replace("/\([^)]+\)/", "", $TopicName[$i]);
+                    @endphp 
+                    <input type="hidden" name="topic" value="{{ $TopicName[$i] }}" >
+                @endfor
+                @php
+                    $TopicName[0] = preg_replace("/\([^)]+\)/", "", $TopicName[0]);
+                @endphp
+                <input type="hidden" name="topic" value="{{ $TopicName[0] }}">
+            </div>
+            <div class="fisrtdata">
+                @for($filltime = 0; $filltime < count($gradedata); $filltime++)
+                <label class="foragelabel">
+                    @for($i = 1; $i < count($TopicName); $i++)
+                    <input type="hidden" name="forage{{ (int)$filltime + 1 }}" value="{{ $gradedata[$filltime][$i]->AgeProficientPercent }}">
+                    @endfor
+                    <input type="hidden" name="forage{{ (int)$filltime + 1 }}" value="{{ $gradedata[$filltime][0]->AgeProficientPercent }}">
+                </label>
+                @endfor
+            </div>
+            <div class="seconddata">
+                @for($filltime = 0; $filltime < count($gradedata); $filltime++)
+                <label class="foragelabel">
+                    @for($i = 1; $i < count($TopicName); $i++)
+                    <input type="hidden" name="forall{{ (int)$filltime + 1 }}" value="{{ $gradedata[$filltime][$i]->AllProficientPercent }}">
+                    @endfor
+                    <input type="hidden" name="forall{{ (int)$filltime + 1 }}" value="{{ $gradedata[$filltime][0]->AllProficientPercent }}">
+                </label>
+                @endfor
+            </div>
         </div>
         <!--視覺化圖形end-->
         @for($filltime = 0; $filltime < count($gradedata); $filltime++ ) 
@@ -223,147 +173,11 @@
             @endfor
 
             <div class="pre-page">
-                <button type="button" class="pre-button" onclick="history.back()"><span>回上頁</span></button>
+            <button type="button" class="pre-button" id="prebutton" data-action="back"><span>回上頁</span></button>
             </div>
     </div>
-
-    <script>
-        const ctx = document.getElementById('FirstChart');
-        const data = {
-            labels: [@for($i = 1; $i < count($TopicName); $i++)
-                @php
-                $TopicName[$i] = preg_replace("/\([^)]+\)/", "", $TopicName[$i]);
-                @endphp '{{ $TopicName[$i] }}',
-                @endfor
-                @php
-                $TopicName[0] = preg_replace("/\([^)]+\)/", "", $TopicName[0]);
-                @endphp '{{ $TopicName[0] }}'
-            ],
-            datasets: [{
-                label: '',
-                data: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-                fill: true,
-                backgroundColor: 'rgba(255,255,255,0)',
-                borderColor: 'rgba(255,255,255,0)',
-                hidden: true
-            }]
-        };
-        const config = {
-            type: 'line',
-            data: data,
-            options: {
-                plugins: {
-                    legend: {
-                        labels: {
-                            // This more specific font property overrides the global property
-                            font: {
-                                size: 25
-                            }
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: '符合年齡的精熟度',
-                        padding: {
-                            top: 10,
-                            bottom: 30
-                        },
-                        font: {
-                            size: 30
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100,
-                        ticks: {
-                            font: {
-                                size: 18,
-                            }
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            font: {
-                                size: 20,
-                            }
-                        }
-                    }
-                }
-            }
-        };
-        const FirstChart = new Chart(ctx, config);
-    </script>
-    <script>
-        const ctx2 = document.getElementById('SecondChart');
-        const data2 = {
-            labels: [@for($i = 1; $i < count($TopicName); $i++)
-                @php
-                $TopicName[$i] = preg_replace("/\([^)]+\)/", "", $TopicName[$i]);
-                @endphp '{{ $TopicName[$i] }}',
-                @endfor
-                @php
-                $TopicName[0] = preg_replace("/\([^)]+\)/", "", $TopicName[0]);
-                @endphp '{{ $TopicName[0] }}'
-            ],
-            datasets: [{
-                label: '',
-                data: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-                fill: true,
-                backgroundColor: 'rgba(255,255,255,0)',
-                borderColor: 'rgba(255,255,255,0)',
-                hidden: true
-            }]
-        };
-        const config2 = {
-            type: 'line',
-            data: data2,
-            options: {
-                plugins: {
-                    legend: {
-                        labels: {
-                            // This more specific font property overrides the global property
-                            font: {
-                                size: 25
-                            }
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: '作息整體的精熟度',
-                        padding: {
-                            top: 10,
-                            bottom: 30
-                        },
-                        font: {
-                            size: 30
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100,
-                        ticks: {
-                            font: {
-                                size: 18,
-                            }
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            font: {
-                                size: 20,
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        const SecondChart = new Chart(ctx2, config2);
-    </script>
-
+    <script src="../newframework/js/Result/prebutton.js"></script>
+    <script src="../newframework/js/Result/CompareShowChart.js"></script>
 </body>
 
 </html>

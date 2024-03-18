@@ -64,24 +64,24 @@ function JudgePage(pagename) {
     if (status == "confirm" || status == "suspected") {
         //have diagnosis
         if (pagename == 'basic') {
-            next_button.setAttribute("onclick", "ChangePage('diagnosis')");
+            next_button.setAttribute("data-changepage", "diagnosis");
             next_span.textContent = "下一頁";
 
-            pre_button.setAttribute("onclick", "location.href='/front'");
+            pre_button.setAttribute("data-changepage", "front");
             pre_span.textContent = "回首頁";
         }
         if (pagename == 'diagnosis') {
-            next_button.setAttribute("onclick", "ChangePage('family')");
+            next_button.setAttribute("data-changepage", "family");
             next_span.textContent = "下一頁";
 
-            pre_button.setAttribute("onclick", "ChangePage('basic')");
+            pre_button.setAttribute("data-changepage", "basic");
             pre_span.textContent = "上一頁";
         }
         if (pagename == 'family') {
-            next_button.setAttribute("onclick", "checkoutput()");
+            next_button.setAttribute("data-changepage", "checkoutput");
             next_span.textContent = "完成";
 
-            pre_button.setAttribute("onclick", "ChangePage('diagnosis')");
+            pre_button.setAttribute("data-changepage", "diagnosis");
             pre_span.textContent = "上一頁";
         }
         ChangeDiagnosis(status);
@@ -89,25 +89,24 @@ function JudgePage(pagename) {
     if (status == "none") {
         //havn't diagnosis
         if (pagename == 'basic') {
-            next_button.setAttribute("onclick", "ChangePage('family')");
+            next_button.setAttribute("data-changepage", "family");
             next_span.textContent = "下一頁";
 
-            pre_button.setAttribute("onclick", "location.href='/front'");
+            pre_button.setAttribute("data-changepage", "front");
             pre_span.textContent = "回首頁";
         }
         if (pagename == 'family') {
-            next_button.setAttribute("onclick", "checkoutput()");
+            next_button.setAttribute("data-changepage", "checkoutput");
             next_span.textContent = "完成";
 
-            pre_button.setAttribute("onclick", "ChangePage('basic')");
+            pre_button.setAttribute("data-changepage", "basic");
             pre_span.textContent = "上一頁";
         }
     }
 }
 function ChangeDiagnosis(status) {
-    console.log(status);
     if (status == "confirm") {
-        document.getElementById("q7").querySelector(".option_title").innerHTML = "障礙類別 <span style=\"color:red\">*</span>";
+        document.getElementById("q7").querySelector(".option_title").innerHTML = "障礙類別 <span class=\"need\">*</span>";
         document.getElementById("q9").style.display = "none";
 
         //when status change and fianl one is confirm, then check diagnosis if click, if checked, then show degree manual
@@ -122,7 +121,7 @@ function ChangeDiagnosis(status) {
         }
     }
     if (status == "suspected") {
-        document.getElementById("q7").querySelector(".option_title").innerHTML = "疑似障礙類別 <span style=\"color:red\">*</span>";
+        document.getElementById("q7").querySelector(".option_title").innerHTML = "疑似障礙類別 <span class=\"need\">*</span>";
         document.getElementById("q8").style.display = "none";
         document.getElementById("q9").style.display = "block";
     }
@@ -130,4 +129,45 @@ function ChangeDiagnosis(status) {
 $(document).ready(function () {
     ChangePage('basic');
 });
-
+try{
+    document.getElementById('Basic-label').addEventListener('click',function(){
+        var changepage = this.getAttribute("data-changepage");
+        ChangePage(changepage)
+    });
+}catch(e){}
+try{
+    document.getElementById('Diagnosis-label').addEventListener('click',function(){
+        var changepage = this.getAttribute("data-changepage");
+        ChangePage(changepage)
+    });
+}catch(e){}
+try{
+    document.getElementById('Family-label').addEventListener('click',function(){
+        var changepage = this.getAttribute("data-changepage");
+        ChangePage(changepage)
+    });
+}catch(e){}
+try{
+    document.getElementById('pre_page_button').addEventListener('click',function(){
+        var changepage = this.getAttribute("data-changepage");
+        //front
+        if(changepage == "front"){
+            window.location.href='/front';
+        }else{
+            ChangePage(changepage);
+        }
+        
+    });
+}catch(e){}
+try{
+    document.getElementById('next_page_button').addEventListener('click',function(){
+        var changepage = this.getAttribute("data-changepage");
+        //checkoutput
+        if(changepage == "checkoutput"){
+            checkoutput();
+        }else{
+            ChangePage(changepage);
+        }
+        
+    });
+}catch(e){}

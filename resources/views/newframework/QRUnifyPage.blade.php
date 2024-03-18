@@ -12,9 +12,9 @@
 
     <!-- Google Web Fonts -->
 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap" rel="stylesheet">
-
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../newframework/css/googlefont.css" rel="stylesheet"> -->
+    
     <!-- Icon Font Stylesheet -->
     <link href="../newframework/font-awesome/css/all.min.css" rel="stylesheet">
 
@@ -34,7 +34,7 @@
     <script src="../js/jquery-3.5.0.min.js"></script>
     <script src="../js/gijgo/js/gijgo.min.js" type="text/javascript"></script>
 
-    <script src="../newframework/js/Result/QRUnifyPage.js"></script>
+    
 
 </head>
 
@@ -114,10 +114,10 @@
                 </tbody>
             </table>
             <div class="pre-page">
-                <button type="button" class="pre-button" onclick="history.back()"><span>回上頁</span></button>
+                <button type="button" class="pre-button" id="backButton"><span>回上頁</span></button>
             </div>
         </div>
     </div>
 </body>
-
+<script src="../newframework/js/Result/QRUnifyPage.js"></script>
 </html>

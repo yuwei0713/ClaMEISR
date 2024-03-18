@@ -3,7 +3,7 @@
 
 <head>
   <title>ClaMEISER-問卷詳細結果</title>
-  <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8 width=device-width, initial-scale=1">
+  <meta name="viewport" http-equiv="Content-Type" content="text/html;charset=UTF-8 width=device-width,initial-scale=1">
   <link href="../newframework/css/bootstrap.min.css" rel="stylesheet">
   <script src="../js/jquery-3.5.0.min.js"></script>
   <link rel="stylesheet" type="text/css" href="../newframework/css/Result/ResultPage.css" />
@@ -22,18 +22,15 @@
   <script src="../newframework/lib/wow/wow.min.js"></script>
   <script src="../newframework/js/main.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../newframework/js/Chartjs/dist/chart.umd.js"></script>
 </head>
 
 <body>
   @include('newframework.layouts.universal.nav')
   <div class="container Block">
     @if($errors->any())
-    <script>
-      $(document).ready(function() {
-        alert("{{ $errors->first() }}")
-      })
-    </script>
+    <input type="hidden" id="errormessage" value="{{ $errors->first() }}">
+    <script src="../newframework/js/Result/Anyerror.js"></script>
     @endif
 
     <!--學生資訊-->
@@ -93,14 +90,6 @@
       </div>
     </div>
     <!--視覺化圖形end-->
-    <script>
-      $(function() {
-        $(".flip").click(function() {
-          $(this).next(".panel").slideToggle(300);
-          $(this).toggleClass('active');
-        });
-      });
-    </script>
     <div class="container">
       <div class="table-title flip">
         <span><strong>功能性領域(Func)：分數總表</strong></span>
@@ -739,208 +728,69 @@
         </tbody>
       </table>
       <div class="pre-page">
-        <button type="button" class="pre-button" onclick="history.back()"><span>回上頁</span></button>
+        <button type="button" class="pre-button" id="prebutton" data-action="back"><span>回上頁</span></button>
+        <script src="../newframework/js/Result/prebutton.js"></script>
+      </div>
+    </div>
+    <div class="dataput">
+      <div class="Func">
+        <div class="topic">
+          <input type="hidden" name="functopic" value="E：投入">
+          <input type="hidden" name="functopic" value="I：獨立性">
+          <input type="hidden" name="functopic" value="SR：社會關係">
+        </div>
+        <div class="data">
+          <input type="hidden" name="funcforagedata" value="{{ $DetailData["FuncE"][0]->AgeProficientPercent }}">
+          <input type="hidden" name="funcforagedata" value="{{ $DetailData["FuncI"][0]->AgeProficientPercent }}">
+          <input type="hidden" name="funcforagedata" value="{{ $DetailData["FuncSR"][0]->AgeProficientPercent }}">
+          <input type="hidden" name="funcforalldata" value="{{ $DetailData["FuncE"][0]->AllProficientPercent }}">
+          <input type="hidden" name="funcforalldata" value="{{ $DetailData["FuncI"][0]->AllProficientPercent }}">
+          <input type="hidden" name="funcforalldata" value="{{ $DetailData["FuncSR"][0]->AllProficientPercent }}">
+        </div>
+      </div>
+      <div class="Dev">
+        <div class="topic">
+          <input type="hidden" name="devtopic" value="A：適應性">
+          <input type="hidden" name="devctopic" value="CG：認知">
+          <input type="hidden" name="devctopic" value="CM：溝通">
+          <input type="hidden" name="devctopic" value="M：動作">
+          <input type="hidden" name="devctopic" value="S：社交">
+        </div>
+        <div class="data">
+          <input type="hidden" name="devforagedata" value="{{ $DetailData["DevA"][0]->AgeProficientPercent }}">
+          <input type="hidden" name="devforagedata" value="{{ $DetailData["DevCG"][0]->AgeProficientPercent }}">
+          <input type="hidden" name="devforagedata" value="{{ $DetailData["DevCM"][0]->AgeProficientPercent }}">
+          <input type="hidden" name="devforagedata" value="{{ $DetailData["DevM"][0]->AgeProficientPercent }}">
+          <input type="hidden" name="devforagedata" value="{{ $DetailData["DevS"][0]->AgeProficientPercent }}">
+          <input type="hidden" name="devforalldata" value="{{ $DetailData["DevS"][0]->AllProficientPercent }}">
+          <input type="hidden" name="devforalldata" value="{{ $DetailData["DevS"][0]->AllProficientPercent }}">
+          <input type="hidden" name="devforalldata" value="{{ $DetailData["DevS"][0]->AllProficientPercent }}">
+          <input type="hidden" name="devforalldata" value="{{ $DetailData["DevS"][0]->AllProficientPercent }}">
+          <input type="hidden" name="devforalldata" value="{{ $DetailData["DevS"][0]->AllProficientPercent }}">
+        </div>
+      </div>
+      <div class="Out">
+        <div class="topic">
+          <input type="hidden" name="outtopic" value="1：正向社會關係">
+          <input type="hidden" name="outtopic" value="2：獲得和使用知識和技巧">
+          <input type="hidden" name="outtopic" value="3：採取行動以滿足需求">
+        </div>
+        <div class="data">
+          <input type="hidden" name="outforagedata" value="{{ $DetailData["OutOne"][0]->AgeProficientPercent }}">
+          <input type="hidden" name="outforagedata" value="{{ $DetailData["OutTwo"][0]->AgeProficientPercent }}">
+          <input type="hidden" name="outforagedata" value="{{ $DetailData["OutThree"][0]->AgeProficientPercent }}">
+          <input type="hidden" name="outforalldata" value="{{ $DetailData["OutOne"][0]->AllProficientPercent }}">
+          <input type="hidden" name="outforalldata" value="{{ $DetailData["OutTwo"][0]->AllProficientPercent }}">
+          <input type="hidden" name="outforalldata" value="{{ $DetailData["OutThree"][0]->AllProficientPercent }}">
+        </div>
       </div>
     </div>
     <!--視覺化圖形 script-->
-    <script>
-      const funcctx = document.getElementById('FuncChart');
-      const funcdata = {
-        labels: [
-          "E：投入",
-          "I：獨立性",
-          "SR：社會關係"
-        ],
-        datasets: [{
-          label: '符合年齡的精熟度',
-          data: [
-            '{{ $DetailData["FuncE"][0]->AgeProficientPercent }}',
-            '{{ $DetailData["FuncI"][0]->AgeProficientPercent }}',
-            '{{ $DetailData["FuncSR"][0]->AgeProficientPercent }}'
-          ],
-          fill: true,
-        }, {
-          label: '作息整體精熟度',
-          data: [
-            '{{ $DetailData["FuncE"][0]->AllProficientPercent }}',
-            '{{ $DetailData["FuncI"][0]->AllProficientPercent }}',
-            '{{ $DetailData["FuncSR"][0]->AllProficientPercent }}'
-          ],
-          fill: true,
-        }]
-      };
-      const funcconfig = {
-        type: 'radar',
-        data: funcdata,
-        options: {
-          scales: {
-            r: {
-              min: 0,
-              max: 100,
-              pointLabels: {
-                font: {
-                  size: 16
-                }
-              }
-            }
-          },
-          animation: false,
-          plugins: {
-            legend: {
-              labels: {
-                // This more specific font property overrides the global property
-                font: {
-                  size: 18
-                }
-              }
-            }
-          },
-          responsive: true, // 设置图表为响应式，根据屏幕窗口变化而变化
-          maintainAspectRatio: false, // 保持图表原有比例
-          elements: {
-            line: {
-              borderWidth: 3 // 设置线条宽度
-            }
-          }
-        }
-      };
-      const FuncChart = new Chart(funcctx, funcconfig);
-    </script>
-    <script>
-      const devctx = document.getElementById('DevChart');
-      const devdata = {
-        labels: [
-          "A：適應性",
-          "CG：認知",
-          "CM：溝通",
-          "M：動作",
-          "S：社交"
-        ],
-        datasets: [{
-          label: '符合年齡的精熟度',
-          data: [
-            '{{ $DetailData["DevA"][0]->AgeProficientPercent }}',
-            '{{ $DetailData["DevCG"][0]->AgeProficientPercent }}',
-            '{{ $DetailData["DevCM"][0]->AgeProficientPercent }}',
-            '{{ $DetailData["DevM"][0]->AgeProficientPercent }}',
-            '{{ $DetailData["DevS"][0]->AgeProficientPercent }}',
-          ],
-          fill: true,
-        }, {
-          label: '作息整體精熟度',
-          data: [
-            '{{ $DetailData["DevA"][0]->AllProficientPercent }}',
-            '{{ $DetailData["DevCG"][0]->AllProficientPercent }}',
-            '{{ $DetailData["DevCM"][0]->AllProficientPercent }}',
-            '{{ $DetailData["DevM"][0]->AllProficientPercent }}',
-            '{{ $DetailData["DevS"][0]->AllProficientPercent }}',
-          ],
-          fill: true,
-        }]
-      };
-      const devconfig = {
-        type: 'radar',
-        data: devdata,
-        options: {
-          scales: {
-            r: {
-              min: 0,
-              max: 100,
-              pointLabels: {
-                font: {
-                  size: 16
-                }
-              }
-            }
-          },
-          animation: false,
-          plugins: {
-            legend: {
-              labels: {
-                // This more specific font property overrides the global property
-                font: {
-                  size: 18
-                }
-              }
-            }
-          },
-          responsive: true, // 设置图表为响应式，根据屏幕窗口变化而变化
-          maintainAspectRatio: false, // 保持图表原有比例
-          elements: {
-            line: {
-              borderWidth: 3 // 设置线条宽度
-            }
-          }
-        }
-      };
-      const DevChart = new Chart(devctx, devconfig);
-    </script>
-    <script>
-      const outctx = document.getElementById('OutChart');
-      const outdata = {
-        labels: [
-          "1：正向社會關係",
-          "2：獲得和使用知識和技巧",
-          "3：採取行動以滿足需求"
-        ],
-        datasets: [{
-          label: '符合年齡的精熟度',
-          data: [
-            '{{ $DetailData["OutOne"][0]->AgeProficientPercent }}',
-            '{{ $DetailData["OutTwo"][0]->AgeProficientPercent }}',
-            '{{ $DetailData["OutThree"][0]->AgeProficientPercent }}'
-          ],
-          fill: true,
-        }, {
-          label: '作息整體精熟度',
-          data: [
-            '{{ $DetailData["OutOne"][0]->AllProficientPercent }}',
-            '{{ $DetailData["OutTwo"][0]->AllProficientPercent }}',
-            '{{ $DetailData["OutThree"][0]->AllProficientPercent }}'
-          ],
-          fill: true,
-        }]
-      };
-      const outconfig = {
-        type: 'radar',
-        data: outdata,
-        options: {
-          scales: {
-            r: {
-              min: 0,
-              max: 100,
-              pointLabels: {
-                font: {
-                  size: 16
-                }
-              }
-            }
-          },
-          animation: false,
-          plugins: {
-            legend: {
-              labels: {
-                // This more specific font property overrides the global property
-                font: {
-                  size: 18
-                }
-              }
-            }
-          },
-          responsive: true, // 设置图表为响应式，根据屏幕窗口变化而变化
-          maintainAspectRatio: false, // 保持图表原有比例
-          elements: {
-            line: {
-              borderWidth: 3 // 设置线条宽度
-            }
-          }
-        }
-      };
-      const OutChart = new Chart(outctx, outconfig);
-    </script>
     <!--視覺化圖形 script end-->
-
+    
   </div>
 </body>
 
+<script src="../newframework/js/Result/ShowDetailChart.js"></script>
+<script src="../newframework/js/Questionnaire/flipslide.js"></script>
 </html>

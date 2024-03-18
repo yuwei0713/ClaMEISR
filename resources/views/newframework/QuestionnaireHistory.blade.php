@@ -11,12 +11,13 @@
 
     <!-- Google Web Fonts -->
 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap" rel="stylesheet">
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="../newframework/css/googlefont.css" rel="stylesheet"> -->
+    
 
     <!-- Icon Font Stylesheet -->
     <link href="../newframework/font-awesome/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="../newframework/css/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
     <link href="../newframework/lib/animate/animate.min.css" rel="stylesheet">
@@ -44,7 +45,7 @@
     @include('layouts.session-message')
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <div class="spinner-grow text-primary" role="status">
             <span class="sr-only">Loading...</span>
         </div>
     </div>
@@ -69,7 +70,7 @@
                 </div>
                 <div class="panel">
                     @for ($i = 0; $i < count($HistoryData); $i++) <label class="chooseframeworklabel" for="span{{ $HistoryData[$i]['BigTopicNumber'] }}" id="label{{ $HistoryData[$i]['BigTopicNumber'] }}">
-                        <div class="chooseframework" onclick="changeshow({{ $HistoryData[$i]['BigTopicNumber'] }})">
+                    <div class="chooseframework" name="changeshow" data-changepanel="{{ $HistoryData[$i]['BigTopicNumber'] }}">
                             <span id="span{{ $HistoryData[$i]['BigTopicNumber'] }}">{{ $HistoryData[$i]['BigTopicName'] }}</span>
                         </div>
                         </label>
@@ -77,6 +78,7 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" id="CountOfTopic" name="CountOfTopic" value="{{ count($HistoryData) }}">
         <input type="hidden" id="currenttalbe" value="">
             @for ($i = 0; $i < count($HistoryData); $i++) <div class="main-framwork" id="table{{ $HistoryData[$i]['BigTopicNumber'] }}">
                 <!--問答-->
@@ -213,20 +215,20 @@
                             <div class="send-framwork">
                                 @if($i == 0)
                                 <div class="pre-page">
-                                    <button type="button" class="pre-button" onclick="location.href='{{ route('cla.unify.show') }}'"><span>回到查詢</span></button>
+                                <button type="button" class="pre-button" name="prepage" data-changepanel="backtosearch"><span>回到查詢</span></button>
                                 </div>
                                 @else
                                 <div class="pre-page">
-                                    <button type="button" class="pre-button" onclick="changeshow({{ $HistoryData[$i]['BigTopicNumber'] - 1 }})"><span>上一頁</span></button>
+                                    <button type="button" class="pre-button" name="prepage" data-changepanel="{{ $HistoryData[$i]['BigTopicNumber'] - 1 }}"><span>上一頁</span></button>
                                 </div>
                                 @endif
                                 @if ($i != count($HistoryData) - 1)
                                 <div class="next-page" id="finalpagebutton">
-                                    <button type="button" class="next-button" onclick="changeshow({{ $HistoryData[$i]['BigTopicNumber'] + 1 }})"><span>下一頁</span></button>
+                                    <button type="button" class="next-button" name="nextpage" data-changepanel="checkoutput"><span>下一頁</span></button>
                                 </div>
                                 @else
                                 <div class="next-page" id="finalpagebutton">
-                                    <button type="button" class="next-button" onclick="location.href='{{ route('cla.unify.show') }}'"><span>回到查詢</span></button>
+                                    <button type="button" class="next-button" name="nextpage" data-changepanel="backtosearch" ><span>回到查詢</span></button>
                                 </div>
                                 @endif
                             </div>
@@ -258,21 +260,8 @@
     <script src="../js/progress_value_count.js"></script>
     <script src="../js/movetofill.js"></script>
     <script src="../js/countinggrade.js"></script>
-    <script>
-        $(function() {
-            $(".flip").click(function() {
-                $(this).next(".panel").slideToggle(300);
-                $(this).toggleClass('active');
-            });
-        });
-    </script>
-    <script>
-        window.onload = function() {
-            movetounfill();
-            firstprogressbar();
-            firstcountgrade();
-        }
-    </script>
+    <script src="../newframework/js/Questionnaire/flipslide.js"></script>
+    <script src="../newframework/js/Questionnaire/windowinitial.js"></script>
 
 
 </body>

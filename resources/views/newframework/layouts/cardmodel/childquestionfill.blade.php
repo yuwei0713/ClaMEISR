@@ -46,7 +46,7 @@
                                 @endif
                             @endforeach
                             <div class="next-page">
-                                <button type="button" class="btn btn-secondary" onclick="checkchildsend({{$QuestionCode}})">確定</button>
+                                <button type="button" class="btn btn-secondary" name="checkchildsend" data-questioncode="{{$QuestionCode}}">確定</button>
                                 <div id="checkchild_fill_alart" class="fill-alart"></div>
                             </div>
                         </form>

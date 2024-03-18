@@ -16,15 +16,15 @@ class TeacherParameterValid
      */
     public function handle(Request $request, Closure $next)
     {
-        $flag = 0;
-        if (strpbrk($request->TeacherName,'[] !@#$%^&*()-=+\\\/?')) {
-            $flag = 1;
-        }
-        
-
-        if ($flag == 1) {
-            return redirect('front');
-        }
+        $request->validate([
+            // 'TeacherName' => ['required','regex:/^[^!@#$%^&*()_+\{\}:“<>?,.\\/;\[\]\|`~]+$/'],
+            'Account' => 'required|regex:/^[a-zA-Z0-9]+$/',
+            'SchoolName' => 'required|regex:/^[\x{4e00}-\x{9fa5}]+$/u',
+            'separate' => 'required|regex:/^[_a-zA-Z0-9]+$/',
+            'kindergarten' => 'required|regex:/^[\x{4e00}-\x{9fa5}~0-9]+$/u',
+            'counseling' => 'required|regex:/^[\x{4e00}-\x{9fa5}~0-9]+$/u',
+            'routinesbased' => 'required|regex:/^[\x{4e00}-\x{9fa5}~0-9]+$/u',
+        ]);
         return $next($request);
     }
 }

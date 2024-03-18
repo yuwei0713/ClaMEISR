@@ -1,7 +1,7 @@
 <div id="Family">
     <div class="std_information_framwork" id="q14">
         <div class="option_title">同住者
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="living">
             <label class="living_framwork input-option">
@@ -29,7 +29,7 @@
             <input name="living_other_content" id="living_other_content" class="other_style" type="text" value="" placeholder="請輸入其他同住者" maxlength="30">
         </div>
         <div class="option_title">主要照顧者
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div>
             <div class="fst_attend">

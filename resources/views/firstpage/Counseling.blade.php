@@ -1,5 +1,5 @@
 <div class="option_title">
-<span style="color:red">*</span>教師輔導特殊生經驗：</div>
+<span class="need">*</span>教師輔導特殊生經驗：</div>
 <div class="teacher_option_content">
     @if(preg_match("/1~2年/",$TeacherData["Counseling"]))
     <label class="counseling_option">

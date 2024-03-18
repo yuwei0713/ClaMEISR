@@ -1,7 +1,7 @@
 <div id="Family">
     <div class="std_information_framwork" id="q14">
         <div class="option_title">同住者
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="living">
             @if(preg_match("/father/",$ChildFullData['Resident']))
@@ -58,11 +58,7 @@
                 <span class="choice-css">其他</span>
             </label>
             @else
-            <script>
-                $(document).ready(function() {
-                    $("#other_living").css("display", "block");
-                });
-            </script>
+            <script src="../newframework/js/childhistorydata/otherlivingblock.js"></script>
             <label class="living_framwork input-option input-click-option">
                 <input class="option_square" type="checkbox" name="living[]" value="other" checked>
                 <span class="choice-css">其他</span>
@@ -77,7 +73,7 @@
             @endif
         </div>
         <div class="option_title">主要照顧者
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div>
             <div class="fst_attend">
@@ -134,11 +130,7 @@
                     <input class="option_square" type="radio" name="fst_attend" value="other" checked>
                     <span class="choice-css">其他</span>
                 </label>
-                <script>
-                    $(document).ready(function() {
-                        $("#other_fst_attend").css("display", "block");
-                    });
-                </script>
+                <script src="../newframework/js/childhistorydata/otherfstattendblock.js"></script>
                 @else
                 <label class="living_framwork input-option">
                     <input class="option_square" type="radio" name="fst_attend" value="other">
@@ -213,11 +205,7 @@
                     <input class="option_square" type="radio" name="sec_attend" value="other" checked>
                     <span class="choice-css">其他</span>
                 </label>
-                <script>
-                    $(document).ready(function() {
-                        $("#other_sec_attend").css("display", "block");
-                    });
-                </script>
+                <script src="../newframework/js/childhistorydata/othersecattendblock.js"></script>
                 @else
                 <label class="living_framwork input-option">
                     <input class="option_square" type="radio" name="sec_attend" value="other">

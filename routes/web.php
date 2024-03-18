@@ -1,5 +1,9 @@
 <?php
 use App\Http\Middleware\QuestionnaireParameterValid;
+use App\Http\Middleware\QuestionnaireGetValid;
+use App\Http\Middleware\ChildDirectValid;
+use App\Http\Middleware\CheckIfPost;
+use App\Http\Middleware\LoginLimit;
 use App\Http\Middleware\TeacherParameterValid;
 
 use Illuminate\Support\Facades\Route;
@@ -26,29 +30,28 @@ use App\Http\Controllers\RegisterController;
 Route::get('/', [OpenController::class, 'frontdirect']);
 Route::get('/front', [OpenController::class, 'index'])->name('front.show');
 
-
 Route::group(['middleware' => ['guest']], function () {
     /**
      * Register Routes
      */
     Route::get('/register', [RegisterController::class, 'show'])->name('register.show');
-    Route::post('/register', [RegisterController::class, 'register'])->name('register.perform');
+    Route::post('/register', [RegisterController::class, 'register'])->name('register.perform')->middleware(CheckIfPost::class);
     /**
      * Login Routes
      */
     Route::get('/login', [LoginController::class, 'show'])->name('login.show');
-    Route::post('/login', [LoginController::class, 'login'])->name('login.perform');
+    Route::post('/login', [LoginController::class, 'login'])->name('login.perform')->middleware(CheckIfPost::class)->middleware(LoginLimit::class);
 });
 
 Route::group(['middleware' => ['auth']], function () {
     /**
      * Teacher Basic Data Insert Route
      */
-    Route::post('/teacherdata', [OpenController::class, 'ReceiveTeacherData'])->name('user.teacherdata.Receive')->middleware(TeacherParameterValid::class);
+    Route::post('/teacherdata', [OpenController::class, 'ReceiveTeacherData'])->name('user.teacherdata.Receive')->middleware(CheckIfPost::class)->middleware(TeacherParameterValid::class);
     /**
      * Teacher Basic Data Update Route
      */
-    Route::post('/updateteacherdata', [OpenController::class, 'ReceiveTeacherData'])->name('user.teacherdata.Update');
+    Route::post('/updateteacherdata', [OpenController::class, 'ReceiveTeacherData'])->name('user.teacherdata.Update')->middleware(CheckIfPost::class)->middleware(TeacherParameterValid::class);
     /**
      * Logout Routes
      */
@@ -56,22 +59,22 @@ Route::group(['middleware' => ['auth']], function () {
     /** 
      *  Questionnaire Route
      */
-    Route::get('ClaMEISER', [QuestionnaireController::class, 'PushClaMEISER'])->name('user.ClaMEISER.show');
-    Route::post('ClaMEISER', [QuestionnaireController::class, 'ReceiveClaMEISER'])->name('user.Receive')->middleware(QuestionnaireParameterValid::class);
+    Route::get('ClaMEISER', [QuestionnaireController::class, 'PushClaMEISER'])->name('user.ClaMEISER.show')->middleware(QuestionnaireGetValid::class);
+    Route::post('ClaMEISER', [QuestionnaireController::class, 'ReceiveClaMEISER'])->name('user.Receive')->middleware(CheckIfPost::class)->middleware(QuestionnaireParameterValid::class);
     /** 
      *  Child Information Route
      */
-    Route::get('ChildInformation', [OpenController::class, 'PushChildInformation'])->name('child.infromation.show');
-    Route::post('ChildInformation', [OpenController::class, 'ReceiveChildInformation'])->name('child.infromation.perform');
+    Route::get('ChildInformation', [OpenController::class, 'PushChildInformation'])->name('child.infromation.show')->middleware(ChildDirectValid::class);
+    Route::post('ChildInformation', [OpenController::class, 'ReceiveChildInformation'])->name('child.infromation.perform')->middleware(CheckIfPost::class);
     /**
      *  Child Information Delete/Recover Route
      */
-    Route::post('ChildInformation/Delete', [OpenController::class, 'DeleteChildInformation'])->name('child.information.delete');
+    Route::post('ChildInformation/Delete', [OpenController::class, 'DeleteChildInformation'])->name('child.information.delete')->middleware(CheckIfPost::class);
     /**
      *  Child Information History Route
      */
     Route::get('InformationHistory/Child', [OpenController::class, 'PushHistoryChildInformation'])->name('child.history.information.show');
-    Route::post('InformationHistory/Child', [OpenController::class, 'ReceiveHistoryChildInformation'])->name('child.history.information.perform');
+    Route::post('InformationHistory/Child', [OpenController::class, 'ReceiveHistoryChildInformation'])->name('child.history.information.perform')->middleware(CheckIfPost::class);
     /**
      * Questionnaire And Result Unify Route
      */
@@ -79,7 +82,7 @@ Route::group(['middleware' => ['auth']], function () {
     /**
      *  Questionnaire History Route
      */
-    Route::post('InformationHistory/Questionnaire',[QuestionnaireController::class, 'PushHistoryClaMEISER'])->name('questionnaire.history.Receive');
+    Route::post('InformationHistory/Questionnaire',[QuestionnaireController::class, 'PushHistoryClaMEISER'])->name('questionnaire.history.Receive')->middleware(CheckIfPost::class);
     /**
      *  Questionnaire Count Result Route
      */

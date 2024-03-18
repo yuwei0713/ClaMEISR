@@ -97,7 +97,9 @@ Services Style
   list-style: none;
   transition: 1s all cubic-bezier(0.075, 0.82, 0.165, 1);
 }
-
+.services ul.nacc li .content_text{
+  display: none;
+}
 .services ul.nacc li.active {
   transition-delay: 0.3s;
   position: relative;
@@ -108,6 +110,9 @@ Services Style
   background-color: #fff;
   border-radius: 15px;
   padding: 80px 120px 50px 120px;
+}
+.services ul.nacc li.active .content_text{
+  display: block;
 }
 
 .services ul.nacc li {

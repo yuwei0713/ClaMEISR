@@ -1,4 +1,4 @@
-<div class="option_title"><span style="color:red">*</span>接觸作息本位經驗：</div>
+<div class="option_title"><span class="need">*</span>接觸作息本位經驗：</div>
 <div class="teacher_option_content">
     @if(preg_match("/1年/",$TeacherData["RoutinesBased"]))
     <label class="routinesbased_option">

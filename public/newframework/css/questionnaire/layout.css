@@ -197,7 +197,12 @@ input[type='radio']:checked:after {
     padding-left: 0.6rem;
     border: 1px solid black;
 }
-
+.notfillyet{
+    border: 3px solid #ffc107;
+}
+.shouldfill{
+    border: 3px solid #FF006F;
+}
 .send-framwork {
     display: flex;
     justify-content: flex-end;

@@ -329,7 +329,7 @@ class QuestionTable
     {
         if ($FillStatus == 0) { //填寫完畢確認送出後
             $FillStatus = 1;
-        } elseif ($FillStatus == 1) { //填寫新問卷
+        } else if ($FillStatus == 1) { //填寫新問卷
             $FillTime += 1;
             $FillStatus = 0;
         }
@@ -468,8 +468,12 @@ class QuestionTable
                     $FillByAge += 1;
                 }
             }
-            $AgeProficientPercent = round(($ThreePoint / $FillByAge) * 100, 2); //四捨五入，取到小數點後第一位
-            $AllProficientPercent = round(($ThreePoint / $FillByAll) * 100, 2); //四捨五入，取到小數點後第一位
+            if($FillByAge > 0){
+                $AgeProficientPercent = round(($ThreePoint / $FillByAge) * 100, 2); //四捨五入，取到小數點後第一位
+            }
+            if($FillByAll > 0){
+                $AllProficientPercent = round(($ThreePoint / $FillByAll) * 100, 2); //四捨五入，取到小數點後第一位
+            }
             //輸入資料到資料庫
             if ($FillByAge >= 3) { //填寫數3項以上，列入計算
                 try {
@@ -486,6 +490,7 @@ class QuestionTable
                         'AllProficientPercent' => $AllProficientPercent,
                         'FillTime' => $FillTime,
                     ]);
+                    
                 } catch (\Illuminate\Database\QueryException $e) {
                     return false;
                 }
@@ -520,8 +525,10 @@ class QuestionTable
             $FillByAll = 0;
             $AllProficientPercent = 0.0;
         }
-        $All_AgeProficientPercent = round(($All_ThreePoint / $All_FillByAge) * 100, 2);
-        $All_AllProficientPercent = round(($All_ThreePoint / $All_FillByAll) * 100, 2);
+        if($All_FillByAge > 0)
+            $All_AgeProficientPercent = round(($All_ThreePoint / $All_FillByAge) * 100, 2);
+        if($All_FillByAll > 0)
+            $All_AllProficientPercent = round(($All_ThreePoint / $All_FillByAll) * 100, 2);
 
         try {
             DB::table('questionbasicgrade')->insert([
@@ -1631,10 +1638,12 @@ class QuestionTable
         $TopicNameArray = array();
         array_push($TopicNameArray, "總和");
         for ($i = 1; $i < $length; $i++) { //獲取大題名稱
+            
             $TopicName = DB::table('questionnairecontent')->select('BigTopicName')
                 ->where('QuestionCode', $QuestionCode)
                 ->where('BigTopicNumber', $i)
                 ->limit(1)->get()->toArray();
+            
             $TopicName = reset($TopicName)->BigTopicName;
             array_push($TopicNameArray, $TopicName);
         }

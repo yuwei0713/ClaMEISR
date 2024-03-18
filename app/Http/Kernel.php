@@ -21,9 +21,13 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-
+        \App\Http\Middleware\HostHeaderValidationMiddleware::class,
         //HTTPS
-        // \App\Http\Middleware\HttpsProtocol::class, 
+        \App\Http\Middleware\HttpsProtocol::class, 
+        //HSTS
+        \Bepsvpt\SecureHeaders\SecureHeadersMiddleware::class,
+        //CSP
+        \Spatie\Csp\AddCspHeaders::class,
     ];
 
     /**
@@ -39,7 +43,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            // \Spatie\Csp\AddCspHeaders::class,
+            
         ],
 
         'api' => [

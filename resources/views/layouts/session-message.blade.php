@@ -11,13 +11,4 @@
         </ul>
 </div>
 @endif
-<script>
-    $(document).ready(function(){
-        setTimeout(() =>{
-            var alertset = document.getElementById('alert');
-            if(alertset != null){
-                alertset.style.display = 'none';
-            }
-        },3500);
-    });
-</script>
+<script src="../newframework/js/messagealert.js"></script>

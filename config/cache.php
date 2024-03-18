@@ -16,7 +16,7 @@ return [
     */
 
     'default' => env('CACHE_DRIVER', 'file'),
-
+    'limiter' => 'file',// redis or memcached
     /*
     |--------------------------------------------------------------------------
     | Cache Stores

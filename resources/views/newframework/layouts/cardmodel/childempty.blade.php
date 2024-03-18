@@ -9,7 +9,7 @@
                 <div>
                     尚未填寫任何學生資料，請問是否立刻填寫?
                 </div>
-                <button id="fill" class="btn btn-info" onclick="jumptostatussend('ChildDataEmpty')">開始填寫</button>
+                <button id="fill" class="btn btn-info" id="jumptostatussend" data-jump="ChildDataEmpty">開始填寫</button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>

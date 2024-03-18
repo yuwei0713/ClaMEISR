@@ -36,7 +36,7 @@
                         </label>
                     </div>
                     <div class="next-page">
-                        <button type="button" class="btn btn-secondary" onclick="checkstatussend()">確定</button>
+                        <button type="button" class="btn btn-secondary" id="checkstatussend">確定</button>
                         <div id="fill_alart" class="fill-alart"></div>
                     </div>
                 </form>

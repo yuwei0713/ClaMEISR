@@ -2,7 +2,7 @@
     <!--第一項 7 障礙類別(特殊生)，疑似障礙類別(疑似生)-->
     <div class="std_information_framwork" id="q7">
         <div class="option_title">障礙類別(單選)
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="diagnosis">
             <label class="diagnosis_framwork diagnosis_framework_four input-option">
@@ -66,7 +66,7 @@
     <!--第二項 8 障礙程度(特殊生)-->
     <div class="std_information_framwork manual_option" id="q8">
         <div class="option_title">障礙程度
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="diagnosis">
             <label class="diagnosis_framwork diagnosis_framework_four input-option">
@@ -91,7 +91,7 @@
     <!--第三項 9 補充說明(疑似生)-->
     <div class="std_information_framwork" id="q9">
         <div class="option_title">補充說明
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="diagnosis">
             <label class="diagnosis_textarea_framwork">
@@ -103,7 +103,7 @@
     <!--第四項 10 鑑定安置類別-->
     <div class="std_information_framwork diagnosis_option" id="q10">
         <div class="option_title">鑑定安置類別
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="diagnosis">
             <label class="diagnosis_framwork diagnosis_framework_four input-option">
@@ -136,7 +136,7 @@
     <!--第五項 11 鑑定安置佐證-->
     <div class="std_information_framwork" id="q11">
         <div class="option_title">鑑定安置佐證
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="diagnosis">
             <label class="diagnosis_framwork diagnosis_framework_four input-option">
@@ -161,7 +161,7 @@
     <!--第六項 12 身障證明-->
     <div class="std_information_framwork" id="q12">
         <div class="option_title">是否領有身障證明
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="diagnosis">
             <label class="diagnosis_framwork diagnosis_framework_two input-option">
@@ -178,7 +178,7 @@
     <!--第七項 13 安置結果-->
     <div class="std_information_framwork" id="q13">
         <div class="option_title">安置結果
-            <span style="color:red">*</span>
+            <span class="need">*</span>
         </div>
         <div class="diagnosis">
             <label class="diagnosis_framwork diagnosis_framework_two input-option">

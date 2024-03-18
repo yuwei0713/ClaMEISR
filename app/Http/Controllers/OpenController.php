@@ -15,7 +15,7 @@ class OpenController extends Controller
     //首頁導向
     public function frontdirect()
     {
-        return redirect('front');
+        return to_route('front.show');
     }
     //首頁呈現
     public function index()
@@ -84,7 +84,6 @@ class OpenController extends Controller
                         }
                     }
                 }
-                
                 return view('newframework.index')
                 ->with('Fillflag', 0)
                 ->with('flag', 1)
@@ -102,44 +101,55 @@ class OpenController extends Controller
     //教師基本資料 接收與處理
     public function ReceiveTeacherData(Request $request)
     {
-        //dd($request);
-        $ifsuccess = "";
-        $flag = (new TeacherData)->CheckIfInsert($request->Account);
-        if ($flag == 0) { //沒有填寫過
-            $ifsuccess = (new TeacherData)->InsertTeacherData($request);
-        } elseif ($flag == 1) { //已經填寫過
-            $ifsuccess = (new TeacherData)->UpdateTeacherData($request);
-        }
-        if ($ifsuccess == 1) { //成功
-            session()->put('TeacherName', $request->TeacherName);
-            session()->flash('message', '資料修改成功!');
+        if ($request->isMethod('post')){
+            $ifsuccess = "";
+            $flag = (new TeacherData)->CheckIfInsert($request->Account);
+            if ($flag == 0) { //沒有填寫過
+                $ifsuccess = (new TeacherData)->InsertTeacherData($request);
+            } elseif ($flag == 1) { //已經填寫過
+                $ifsuccess = (new TeacherData)->UpdateTeacherData($request);
+            }
+            if ($ifsuccess == 1) { //成功
+                session()->put('TeacherName', $request->TeacherName);
+                session()->flash('message', '資料修改成功!');
+                return redirect('front');
+            } else { //失敗
+                session()->flash('errormessage', '資料更改有誤，請重新嘗試');
+            }
+        }else{
+            session()->flash('errormessage', '未知錯誤，請重試一次');
             return redirect('front');
-        } else { //失敗
-            session()->flash('errormessage', '資料更改有誤，請重新嘗試');
         }
+        
     }
     //幼兒基本資料 呈現
     public function PushChildInformation(Request $request)
     {
+        $request = $request->query();
         [$CurrentYear, $Semester] = (new GetDate)->GetYearSemester(); //計算民國年次 西元轉民國
         $SchoolCode = session('schoolcode');
         [$SchoolName, $Class] = (new ChildInformationTable)->PushBasicData($SchoolCode);
-        return view('newframework.childdata')->with('SchoolCode', $SchoolCode)->with('SchoolName', $SchoolName->SchoolName)->with('Class', $Class)->with('year', $CurrentYear)->with('status', $request->childstatus)->with('semester', $Semester);
+        return view('newframework.childdata')->with('SchoolCode', $SchoolCode)->with('SchoolName', $SchoolName->SchoolName)->with('Class', $Class)->with('year', $CurrentYear)->with('status', $request['childstatus'])->with('semester', $Semester);
     }
     //幼兒基本資料 接收與處理
     public function ReceiveChildInformation(Request $request)
     {
-        $account = Auth::user()->username;
-        //dd($request);
-
-        $ifsuccess =  (new ChildInformationTable)->InsertChildInformation($request, $account);
-        if ($ifsuccess) {
-            session()->flash('message', '兒童資料新增成功');
+        if ($request->isMethod('POST')){
+            $account = Auth::user()->username;
+    
+            $ifsuccess =  (new ChildInformationTable)->InsertChildInformation($request, $account);
+            if ($ifsuccess) {
+                session()->flash('message', '兒童資料新增成功');
+                return redirect('front');
+            } else {
+                session()->flash('errormessage', '資料重複，請修改!');
+                return redirect()->back()->withInput();
+            }
+        }else{
+            session()->flash('errormessage', '未知錯誤，請重試一次');
             return redirect('front');
-        } else {
-            session()->flash('errormessage', '資料重複，請修改!');
-            return redirect()->back()->withInput();
         }
+        
         /**
          * student_name = 兒童姓名
          * gender = 兒童性別
@@ -159,10 +169,11 @@ class OpenController extends Controller
     //幼兒基本資料 歷史紀錄呈現
     public function PushHistoryChildInformation(Request $request)
     {
+        $request = $request->query();
         $TeacherName = session('TeacherName');
         $SchoolCode = session('schoolcode');
 
-        $RequestData = preg_split("/-/", $request->historychild, -1, PREG_SPLIT_NO_EMPTY);
+        $RequestData = preg_split("/-/", $request['historychild'], -1, PREG_SPLIT_NO_EMPTY);
 
         $StudentID = $RequestData[0];
         //0 學號 - 1 填寫次數 - 2 填寫狀態(次數為0時，無資料)
@@ -198,43 +209,54 @@ class OpenController extends Controller
     //幼兒基本資料 歷史紀錄更改
     public function ReceiveHistoryChildInformation(Request $request)
     {
-        $account = Auth::user()->username;
-        //dd($request);
-        $ifsuccess =  (new ChildInformationTable)->UpdataChildInformation($request, $account);
-        if ($ifsuccess) {
-            session()->flash('message', '資料修改成功!');
+        if ($request->isMethod('post')){
+            $account = Auth::user()->username;
+            //dd($request);
+            $ifsuccess =  (new ChildInformationTable)->UpdataChildInformation($request, $account);
+            if ($ifsuccess) {
+                session()->flash('message', '資料修改成功!');
+                return redirect('front');
+            } else {
+                session()->flash('errormessage', '資料更改有誤，請檢查是否輸入完全或正確，並重新嘗試');
+                return redirect()->back()->withInput();;
+            }
+        }else{
+            session()->flash('errormessage', '未知錯誤，請重試一次');
             return redirect('front');
-        } else {
-            session()->flash('errormessage', '資料更改有誤，請檢查是否輸入完全或正確，並重新嘗試');
-            return redirect()->back()->withInput();;
         }
+        
     }
     //幼兒基本資料 刪除
     public function DeleteChildInformation(Request $request)
     {
-        $Action = "Remove";
-        $StudentID = $request->StudentID;
-        print_r("CheckID：",$StudentID);
-        //check deletestudentschooltable (delete order，刪除順序)
-        $Order = (new ChildInformationTable)->GetDeleteOrder($StudentID);
-        print_r("CheckOrder：",$Order);
-        //Insert Data to DeleteTable
-        $IfInsertSuccess = (new ChildInformationTable)->TransferData($StudentID, $Order, $Action);
-        print_r("CheckInsert：",$IfInsertSuccess);
-        if ($IfInsertSuccess) {
-            //Delete Data From Table
-            $IfDeleteSuccess = (new ChildInformationTable)->DeleteData($StudentID, $Order, $Action);
-            print_r("CheckDelete：",$IfDeleteSuccess);
-            if ($IfDeleteSuccess) {
-                session()->flash('message', '資料刪除成功!');
-                return redirect('front');
+        if ($request->isMethod('post')){
+            $Action = "Remove";
+            $StudentID = $request->StudentID;
+            print_r("CheckID：",$StudentID);
+            //check deletestudentschooltable (delete order，刪除順序)
+            $Order = (new ChildInformationTable)->GetDeleteOrder($StudentID);
+            print_r("CheckOrder：",$Order);
+            //Insert Data to DeleteTable
+            $IfInsertSuccess = (new ChildInformationTable)->TransferData($StudentID, $Order, $Action);
+            print_r("CheckInsert：",$IfInsertSuccess);
+            if ($IfInsertSuccess) {
+                //Delete Data From Table
+                $IfDeleteSuccess = (new ChildInformationTable)->DeleteData($StudentID, $Order, $Action);
+                print_r("CheckDelete：",$IfDeleteSuccess);
+                if ($IfDeleteSuccess) {
+                    session()->flash('message', '資料刪除成功!');
+                    return redirect('front');
+                } else {
+                    session()->flash('errormessage', '資料刪除有誤，請稍後嘗試');
+                    return redirect()->back()->withInput();;
+                }
             } else {
                 session()->flash('errormessage', '資料刪除有誤，請稍後嘗試');
                 return redirect()->back()->withInput();;
             }
-        } else {
-            session()->flash('errormessage', '資料刪除有誤，請稍後嘗試');
-            return redirect()->back()->withInput();;
+        }else{
+            session()->flash('errormessage', '未知錯誤，請重試一次');
+            return redirect('front');
         }
     }
     public function RecoverChildInformation(Request $request)

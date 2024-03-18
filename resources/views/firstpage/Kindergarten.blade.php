@@ -1,4 +1,4 @@
-<div class="option_title"><span style="color:red">*</span>於幼兒園服務的經驗：</div>
+<div class="option_title"><span class="need">*</span>於幼兒園服務的經驗：</div>
 <div class="teacher_option_content">
     @if(preg_match("/1~3年/",$TeacherData["Kindergarten"]))
     <label class="kindergarten_option">

@@ -3,7 +3,7 @@
         <div>
             <div class="std_information_framwork" id="q0">
                 <div class="option_title">診斷狀態
-                    <span style="color:red">*</span>
+                    <span class="need">*</span>
                 </div>
                 <div class="status">
                     @if($status == "confirm")
@@ -52,7 +52,7 @@
             </div>
             <div class="std_information_framwork" id="q1">
                 <div class="option_title">兒童姓名
-                    <span style="color:red">*</span>
+                    <span class="need">*</span>
                 </div>
                 <div class="input_style">
                     <input id="student_name" name="student_name" class="student_name_style" type="text" placeholder="請輸入學生姓名" maxlength="10" value="{{ old('student_name') }}">
@@ -62,7 +62,7 @@
                 <div class="school_information_framwork">
                     <div class="school_inner_framwork">
                         <div class="option_title">班級
-                            <span style="color:red">*</span>
+                            <span class="need">*</span>
                         </div>
                         <div class="input_style">
                             <select id="class_name" name="class_name" class="class_option input-option">
@@ -74,7 +74,7 @@
                     </div>
                     <div class="school_inner_framwork">
                         <div class="option_title">座號
-                            <span style="color:red">*</span>
+                            <span class="need">*</span>
                         </div>
                         <div class="input_style">
                             <input id="student_code" name="student_code" class="student_name_style" type="number" placeholder="請輸入座號" oninput="if(value.length>2)value=value.slice(0,2)">
@@ -92,7 +92,7 @@
             </div>
             <div class=" std_information_framwork" id="q3">
                 <div class="option_title">兒童性別
-                    <span style="color:red">*</span>
+                    <span class="need">*</span>
                 </div>
                 <div class="option_content">
                     <label class="gender_option input-option">
@@ -113,19 +113,10 @@
                 <div class="student_age_framwork">
                     <div class="student_age_inner_framwork">
                         <div class="option_title">兒童生日
-                            <span style="color:red">*</span>
+                            <span class="need">*</span>
                         </div>
                         <div>
-                            <input class="input-group date" name="age_datepicker" id="age_datepicker" width="276" autocomplete="off" onchange="count_age()" />
-                            <script>
-                                maxdate = new Date(new Date().getFullYear() - 2, new Date().getMonth(), new Date().getDate());
-                                defaultdate = new Date(new Date().getFullYear() - 2, new Date().getMonth(), new Date().getDate());
-                                $('#age_datepicker').datepicker({
-                                    uiLibrary: 'bootstrap4',
-                                    format: 'yyyy-mm-dd',
-                                    maxDate: maxdate,
-                                }).value(defaultdate).datepicker("update");
-                            </script>
+                            <input class="input-group date" name="age_datepicker" id="age_datepicker" width="276" autocomplete="off" />
                         </div>
                     </div>
                     <div class="student_age_inner_framwork">
@@ -142,7 +133,7 @@
                 <div class="student_age_framwork">
                     <div class="student_age_inner_framwork">
                         <div class="option_title">入學年度
-                            <span style="color:red">*</span>
+                            <span class="need">*</span>
                         </div>
                         <div class="input_style">
                             <input name="year" id="year" class="student_name_style" type="number" value="{{ $year }}" oninput="if(value.length>3)value=value.slice(0,3)">
@@ -150,7 +141,7 @@
                     </div>
                     <div class="student_age_inner_framwork">
                         <div class="option_title">入學學期
-                            <span style="color:red">*</span>
+                            <span class="need">*</span>
                         </div>
                         <div class="option_content">
                         @if($semester == "上")
@@ -187,7 +178,7 @@
             </div>
             <div class="std_information_framwork" id="q6">
                 <div class="option_title">量表填答人
-                    <span style="color:red">*</span>
+                    <span class="need">*</span>
                 </div>
                 <div class="input_style">
                     <input name="quest_name" id="quest_name" class="student_name_style" type="text" value="{{ session('TeacherName') }}" readonly="readonly">

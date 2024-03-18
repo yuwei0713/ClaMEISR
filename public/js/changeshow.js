@@ -16,3 +16,46 @@ $(document).ready(function () {
     $("#currenttalbe").val("1");
     $("#label1").addClass("tabActive");
 });
+try{
+    var changeshowElements = document.getElementsByName("changeshow");
+    changeshowElements.forEach(function(element) {
+        element.addEventListener("click", function() {
+            var number = this.getAttribute("data-changepanel");
+            changeshow(number);
+        });
+    });
+}catch(e){}
+
+try{
+    var prepageElements = document.getElementsByName("prepage");
+    prepageElements.forEach(function(element) {
+        element.addEventListener("click", function() {
+            var number = this.getAttribute("data-changepanel");
+            if(number == "front"){
+                window.location.href='/front';
+            }else{
+                changeshow(number);
+            }
+            if(number == "backtosearch"){
+                window.location.href='/InformationHistory';
+            }
+        });
+    });
+}catch(e){}
+
+try{
+    var nextpageElements = document.getElementsByName("nextpage");
+    nextpageElements.forEach(function(element) {
+        element.addEventListener("click", function() {
+            var number = this.getAttribute("data-changepanel");
+            if(number == "checkoutput"){
+                checkoutput(1)
+            }else{
+                changeshow(number);
+            }
+            if(number == "backtosearch"){
+                window.location.href='/InformationHistory';
+            }
+        });
+    });
+}catch(e){}

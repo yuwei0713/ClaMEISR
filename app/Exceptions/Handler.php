@@ -2,10 +2,10 @@
 
 namespace App\Exceptions;
 
+use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Auth\Access\AuthorizationException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
+use Illuminate\Support\Facades\Auth;
 
 class Handler extends ExceptionHandler
 {
@@ -54,5 +54,33 @@ class Handler extends ExceptionHandler
         //         return back()->with('csrfTokenError', 'Sorry\n');
         //     };
         // });
+    }
+    public function render($request, Throwable $exception)
+    {
+        
+        // Always redirect to the index page when an exception occurs
+        if($exception->getMessage() != ""){
+            session()->flash('errormessage', '未知錯誤，請重試一次');
+            $data = fopen("/var/www/ClaMEISR/app/Exceptions/weberrorlog.txt", "a");
+            try{
+                $account = Auth::user()->username;
+                $TeacherName = session('TeacherName');
+                $SchoolCode = session('schoolcode');
+                $errorlog = "Username：".$account." SchoolCode：".$SchoolCode." TeacherName：".$TeacherName." Error Log：".$exception->getMessage()."  Date：".date("Y/m/d H:i:s",strtotime('8 hour')).PHP_EOL;
+                fwrite($data, strval($errorlog));
+            }catch(Exception $e){
+                $errorlog = "ErrorLog：".$exception->getMessage()."  Date：".date("Y/m/d").PHP_EOL;
+                fwrite($data, strval($errorlog));
+            }
+            fclose($data);
+        }
+        return redirect('front');
+
+        // You can also customize the response further if needed
+        // For example, return a specific view
+        // return response()->view('errors.custom_error_view', [], 500);
+
+        // Or you can call the parent render method for default behavior
+        // return parent::render($request, $exception);
     }
 }

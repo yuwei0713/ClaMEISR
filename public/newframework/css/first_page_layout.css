@@ -27,7 +27,22 @@
     border-right: none;
     outline: none;
 }
-
+.carousel-image{
+    max-width: 900px;
+}
+.process-icon{
+    width: 60px;
+    height: 60px;
+}
+.need{
+    color: red;
+}
+.about-image{
+    min-height: 400px;
+}
+.about-image-objict{
+    object-fit: cover;
+}
 .downloadfile {
     display: block;
 }
